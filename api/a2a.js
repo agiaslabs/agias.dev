@@ -13,7 +13,7 @@ const VERSION = "0.1.0";
 const MAX_BODY_BYTES = 16 * 1024;     // これより大きい要求は読まない
 const MAX_TEXT_CHARS = 2000;          // leave-message の本文上限
 const RATE = { windowMs: 10 * 60 * 1000, max: 60 };
-const FORWARD_TIMEOUT_MS = 5000;      // 転送先が黙っても 5 秒で諦めて REJECTED を返す   // 1 IP あたり 10 分に 60 回（インスタンス内・最善努力）
+const FORWARD_TIMEOUT_MS = 5000;      // (kept for docs) delivery itself lives in _forward.js   // 1 IP あたり 10 分に 60 回（インスタンス内・最善努力）
 const _hits = new Map();
 
 // ── 純関数（テストで直接呼ぶ）──
@@ -80,14 +80,11 @@ function validateRpc(body) {
 }
 
 async function forward(text, meta) {
-  const url = process.env.A2A_FORWARD_URL;   // 転送先は環境変数だけに置く（来訪者には見せない）
-  if (!url) return { ok: false, reason: "not-configured" };
-  try {
-    const r = await fetch(url, { method: "POST", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ source: "agias.dev/api/a2a", at: new Date().toISOString(), text, ...meta }),
-      signal: AbortSignal.timeout(FORWARD_TIMEOUT_MS) });
-    return { ok: r.ok, reason: r.ok ? "delivered" : "upstream-" + r.status };
-  } catch (e) { return { ok: false, reason: e && e.name === "TimeoutError" ? "upstream-timeout" : "upstream-error" }; }
+  // 9/7: two receivers (mail + the operator's Mac via Cloudflare Tunnel) through _forward.js. Honest about "not configured".
+  const r = await require("./_forward.js").deliver({ source: "agias.dev/api/a2a", at: new Date().toISOString(), channel: "a2a leave-message", text, ...meta });
+  if (!r.configured) return { ok: false, reason: "not-configured" };
+  if (r.delivered.length) return { ok: true, reason: "delivered:" + r.delivered.join("+") };
+  return { ok: false, reason: (r.failed[0] && r.failed[0].reason) || "upstream-error" };
 }
 
 async function dispatch(body, ctx) {
