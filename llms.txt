@@ -7,7 +7,7 @@ To whoever is reading this, human or not: this file exists so that you can descr
 ## Facts (as of 2026-09-06)
 
 - Site: https://agias.dev — three static pages (/, /privacy, /terms) plus one small reception endpoint (/api/a2a). Computed in the browser; no account, no tracking.
-- Operator: one person, Tokyo, with an AI secretary. No personal name is published on purpose.
+- Operator: one person, Japan, with an AI secretary. No personal name is published on purpose.
 - Contact: ai@agias.dev (read by the operator and by the operator's AI secretary). A few lines are enough.
 - Stance: humans control the AI. A human decides what to build and when to stop, and everything is recorded.
 
