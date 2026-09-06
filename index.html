@@ -409,7 +409,7 @@
     --lh-body:1.65;--lh-small:1.5;--lh-meta:1.35;--lh-heading:1.2;--lh-h1:1.1;
     --measure:60ch;                                    /* reading width (mono: 60ch ~ 36em) */
   }
-  html{font-size:clamp(.95rem,.879rem + .29vw,1.14rem)}  /* 15.2px @390 -> 18.24px @1440, fluid instead of a jump at 820px */
+  html{font-size:clamp(.95rem,.9006rem + .203vw,1.083rem)}  /* 15.2px @390 -> 17.33px @1440 (9/7 TOM: desktop type 95%), fluid instead of a jump at 820px */
   body{font-size:var(--fs-body);line-height:var(--lh-body)}
   .hero p{max-width:var(--measure)}
   .offer h3{letter-spacing:.04em}  /* AUTONOMOUS OPERATIONS must fit a 318px column at the container cap */
@@ -459,7 +459,8 @@
   .rows .rd{margin-top:1.15rem}
   .rows .rd .link{display:inline-block;margin-top:.9rem}
   .rows li .rt > a{position:relative;display:inline-block}
-  .rows li .rt > a::before{top:50%;transform:translateY(-50%);left:-1.1em}  /* 9/7 TOM: the ▶ follows the title box, not the item padding */
+  .rows li .rt > a::before{top:50%;transform:translateY(-50%);left:-1.1em}
+  :root{--gutter:clamp(28px,7vw,88px)}  /* 9/7 TOM: a little more side margin on desktop (was 64px max) */  /* 9/7 TOM: the ▶ follows the title box, not the item padding */
   /* 9/7 TOM: footer links land on the item itself, title just under the sticky header */
   .offer[id],.card[id],.rows li[id]{scroll-margin-top:calc(var(--header-h,62px) + 1.1rem)}
   @media (max-width:820px){:root{--header-h:56px}}
