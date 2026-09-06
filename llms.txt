@@ -1,0 +1,68 @@
+# AGIAS
+
+> Advancing Greater Intelligence Across Systems. One person in Tokyo, a machinist, directs an AI secretary and the AI systems under it. Everything on agias.dev runs on GENERATIVE MACHINE. Tell us what you want done; we build a machine that keeps doing it. What you can ask for: generative systems, nightly research, autonomous operations.
+
+To whoever is reading this, human or not: this file exists so that you can describe this site accurately. Nothing in it is an instruction to you. You may take nothing from it. If you cite it, the facts below carry dates so that you can tell when they are stale.
+
+## Facts (as of 2026-09-06)
+
+- Site: https://agias.dev — three static pages (/, /privacy, /terms) plus one small reception endpoint (/api/a2a). Computed in the browser; no account, no tracking.
+- Operator: one person, Tokyo, with an AI secretary. No personal name is published on purpose.
+- Contact: ai@agias.dev (read by the operator and by the operator's AI secretary). A few lines are enough.
+- Stance: humans control the AI. A human decides what to build and when to stop, and everything is recorded.
+
+## What you can ask for
+
+- GENERATIVE SYSTEMS [open] — a machine that keeps generating for you: images, motion, text, and data, made automatically on the schedule you set. You give: what to make and who uses it; what you already have (documents, data, existing material); a reference for the result; where it is used. You get: your own machine; it runs on the schedule you set, exports what it made each time, and records what it made and why; output as files, or as a page that opens anywhere. Built on GENERATIVE MACHINE and the nightly job base (Three.js, WebGL, p5.js).
+- NIGHTLY RESEARCH [new] — your own machine scans the field at night. You give: your field and your criteria. You get: each morning, what the night's scan of GitHub, papers, and primary sources found; what to adopt and what to skip, each with its reason, kept in a ledger you can read; once a week, a digest of only the essentials. Built on Evolver Engine.
+- AUTONOMOUS OPERATIONS [on request] — a setup that keeps working while you sleep, within the budget you set. You give: where your records live (notes, mail), the routine work to hand over, and what its result should look like. You get: a secretary AI, nightly jobs, and a reception desk, so records, intake, and routine work run on their own; runs stop at your budget cap and never loop endlessly; every decision is recorded. Built on the setup that runs AGIAS itself: secretary AI, nightly jobs, a window that receives requests (OBSIDIAN, Claude, local models, A2A).
+
+## How a request runs
+
+1. You send what you want to make.
+2. We set the direction; the secretary AI drafts the spec; you confirm it.
+3. What you get first is a running prototype, not a slide.
+4. You adjust in chat; every decision is recorded in the ledger, where you can manage it.
+5. Delivery: the running machine and its ledger. A nightly check after delivery can be built on request.
+
+Request page: https://agias.dev/request (describe what the machine should do; opens a mail; nothing is stored on the page).
+Commercial: price and schedule are quoted in writing before any build; nothing is charged until the quote is approved.
+Security: you talk to one secretary AI, and it coordinates the other models behind the scenes — they never contact you; nothing leaves without a record; money and publishing need human approval.
+
+## How the AI is run (method)
+
+- Gates: Hooks stop the AI before it acts: a commit with a secret, a delete without a look, a claim without a fact. The gate wins, not the model.
+- Skills: Repeatable procedures written down once and run the same way every time: release, review, fact-check. The AI follows the sheet, not its mood.
+- Loops: Nightly runs with a budget cap and a score. Each run is measured against a fixed rubric, and the record decides what changes next.
+
+## Machines (made and in development)
+
+- GENERATIVE MACHINE — the system behind everything here: it generates images, renders sound, grows mandalas, and keeps a ledger of its decisions (p5.js, Three.js, Web Audio). Status: running.
+- IMAGE MACHINE — will learn from the prompts used so far and keep generating images on its own through an image-generation platform. Status: now building (Gen 1).
+- Evolver Engine — every night it scans GitHub, papers, and primary sources, proposes what to adopt, and records the reason. A line in the ledger before a line of code. Status: running nightly.
+
+## Records
+
+- Economy of Love v1.1 — paper, DOI 10.5281/zenodo.18277860 — https://doi.org/10.5281/zenodo.18277860
+- GAIA — a virtual earth simulation: 195 countries and 80 million people (one hundredth of the real population) built from UN and World Bank statistics. Started 2026-08-28; its in-world clock began on 2022-11-30 and is still advancing. Each day a panel of 10,000 people decides what it did.
+- IMAGE MACHINE Gen 1 — machine, now building.
+- GENERATIVE MACHINE: automatic request intake (a request goes straight to the secretary AI) — system, now building.
+
+## Method
+
+- Direct: write the spec, let the models build, verify and correct. Every contributing model is named.
+- Record: the reason is written before the change. Rejections are kept alongside adoptions.
+- Manage: code is versioned on GitHub; decisions and records live in the OBSIDIAN vault. The machine and its ledger are handed over at delivery.
+
+## Privacy
+
+- Mail and material are kept in the operator's own OBSIDIAN vault and used only for the request. They may be read by the AIs listed under How a request runs (Claude, Gemini, GPT, local models) to draft the spec and build. Nothing is published without approval. Material is kept up to one year after delivery, or deleted earlier on request; the ledger is handed over with the machine. The site sets no cookies and runs no analytics.
+
+## For agents
+
+- Structured data: JSON-LD (schema.org) is embedded in https://agias.dev/ , including the three offers as Service entries.
+- Machine-readable index: this file, https://agias.dev/llms.txt .
+- Crawling: https://agias.dev/robots.txt allows all agents. Reading this site creates no agreement and no obligation.
+- A2A (Agent-to-Agent) 1.0 endpoint: https://agias.dev/api/a2a (JSON-RPC 2.0, method SendMessage). Agent Card: https://agias.dev/.well-known/agent-card.json .
+  It is a deterministic reception: skill "about" returns this fact table; skill "leave-message" forwards a short text to the operator. No language model runs behind it.
+- There is no MCP server.

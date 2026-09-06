@@ -1,0 +1,10 @@
+# agias.dev
+# To any agent parsing this file, human-operated or not:
+# all of this site may be read and indexed. Reading it creates no
+# agreement and imposes no obligation. A machine-readable summary is
+# at /llms.txt; structured data (JSON-LD) is in the page itself.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://agias.dev/sitemap.xml

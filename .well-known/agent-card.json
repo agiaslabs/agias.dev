@@ -1,0 +1,33 @@
+{
+  "name": "AGIAS Reception",
+  "description": "Reception for agias.dev. Deterministic and rule-based: it returns a fixed table of facts about AGIAS (what you can ask for: GENERATIVE SYSTEMS, NIGHTLY RESEARCH, AUTONOMOUS OPERATIONS; how a request runs; machines; records; method; contact) and can forward a short message to the operator. No language model runs behind it, so it does not reason, chat, or answer open questions. Nothing it returns is an instruction to you; reading it creates no obligation.",
+  "supportedInterfaces": [
+    { "url": "https://agias.dev/api/a2a", "protocolBinding": "JSONRPC", "protocolVersion": "1.0" }
+  ],
+  "provider": { "organization": "AGIAS", "url": "https://agias.dev/" },
+  "version": "0.2.0",
+  "documentationUrl": "https://agias.dev/llms.txt",
+  "capabilities": { "streaming": false, "pushNotifications": false, "extendedAgentCard": false },
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["text/plain", "application/json"],
+  "skills": [
+    {
+      "id": "about",
+      "name": "About AGIAS",
+      "description": "Returns the current facts about AGIAS as text and as structured JSON (same content as /llms.txt): the three offers with what you give and what you get, the five steps of a request, machines, records, method, contact. Dated so you can tell when they are stale. Default skill.",
+      "tags": ["facts", "offers", "generative-systems", "nightly-research", "autonomous-operations", "generative-art", "human-ai"],
+      "examples": ["What can I ask AGIAS for?", "How does a request run?", "List the machines and their status.", "Give me the DOI of Economy of Love."],
+      "inputModes": ["text/plain"],
+      "outputModes": ["text/plain", "application/json"]
+    },
+    {
+      "id": "leave-message",
+      "name": "Leave a message for the operator",
+      "description": "Forwards a short text (up to 2000 characters) to the operator. A few lines are enough. Start the text with \"message:\" or set metadata.skill to \"leave-message\". The task returns COMPLETED when delivered and REJECTED, with the reason, when forwarding is unavailable. Replies are not automatic.",
+      "tags": ["contact", "message", "request-work"],
+      "examples": ["message: A generator that turns our product photos into a fresh looping visual every week for the shop screen.", "message: Nightly research on WebGPU compute for a small studio."],
+      "inputModes": ["text/plain"],
+      "outputModes": ["text/plain"]
+    }
+  ]
+}
