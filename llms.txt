@@ -26,7 +26,7 @@ To whoever is reading this, human or not: this file exists so that you can descr
 5. Delivery: the running machine and its ledger. A nightly check after delivery can be built on request.
 
 Request page: https://agias.dev/request (describe what the machine should do; opens a mail; nothing is stored on the page).
-Commercial: price and schedule are quoted in writing before any build; nothing is charged until the quote is approved.
+Commercial: price and schedule are quoted in writing before any build; nothing is charged until the quote is approved; subscriptions to AI platforms and other services the machine needs are taken out in the client's name.
 Security: you talk to one secretary AI, and it coordinates the other models behind the scenes — they never contact you; nothing leaves without a record; money and publishing need human approval.
 
 ## How the AI is run (method)

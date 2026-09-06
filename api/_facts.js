@@ -54,7 +54,7 @@ module.exports = {
     { name: "Gates", text: "Hooks stop the AI before it acts: a commit with a secret, a delete without a look, a claim without a fact. The gate wins, not the model." },
     { name: "Skills", text: "Repeatable procedures written down once and run the same way every time: release, review, fact-check. The AI follows the sheet, not its mood." },
     { name: "Loops", text: "Nightly runs with a budget cap and a score. Each run is measured against a fixed rubric, and the record decides what changes next." } ],
-  commercial: ["price and schedule are quoted in writing before any build", "nothing is charged until the quote is approved", "AI agents can read this site agent to agent; requests are taken by mail"],
+  commercial: ["price and schedule are quoted in writing before any build", "nothing is charged until the quote is approved", "subscriptions to AI platforms and other services the machine needs are taken out in the client's name", "AI agents can read this site agent to agent; requests are taken by mail"],
   security: ["you talk to one secretary AI; it coordinates the other models behind the scenes and they never contact you", "nothing leaves without a record", "money and publishing need human approval"],
   privacy: ["mail and material are kept in the operator's own OBSIDIAN vault and used only for the request", "they may be read by the AIs listed under HOW to draft the spec and build; nothing is published without approval", "material is kept up to one year after delivery, or deleted earlier on request; the ledger is handed over with the machine", "the site sets no cookies and runs no analytics"],
   machineReadable: {
