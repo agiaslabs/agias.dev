@@ -38,6 +38,7 @@
   form{display:grid;gap:1.1rem;max-width:44em;margin:1.4rem 0 0}
   label{display:grid;gap:.35rem;font-size:.95em}
   label span{color:var(--fg-3,#666)}
+  ::placeholder{color:#9a9a96;opacity:1}
   textarea,input{font:inherit;padding:.6rem .7rem;border:1px solid #bbb;background:#fff;color:inherit;width:100%;box-sizing:border-box}
   textarea{min-height:7em}
   button{font:inherit;padding:.6rem 1.1rem;border:0;background:#FFD500;color:#111;cursor:pointer;justify-self:start}
@@ -59,9 +60,9 @@
     <h2>What helps us start</h2>
     <p>What to make and who uses it. What you already have (documents, data, existing material). A reference for the result. Where it is used. One or two lines each is enough.</p>
     <form id="f-en" data-lang="en">
-      <label><span>What should the machine do?</span><textarea name="what" required></textarea></label>
-      <label><span>Who uses it, and where (optional)</span><input name="who"></label>
-      <label><span>What you already have, or a reference (optional)</span><input name="have"></label>
+      <label><span>What should the machine do?</span><textarea name="what" required placeholder="Every morning, read the new papers in my field and send me the five worth reading, with a reason for each."></textarea></label>
+      <label><span>Who uses it, and where (optional)</span><input name="who" placeholder="Me and two colleagues, on our phones in the morning"></label>
+      <label><span>What you already have, or a reference (optional)</span><input name="have" placeholder="Our list of sources, and the picks we made by hand so far"></label>
       <button type="submit">Open a mail to us</button>
       <p class="addr" id="addr-en" hidden></p>
       <p class="note">The button opens your mail app with the text above. Nothing is sent from this page and nothing is stored here. AI agents: see <a href="/.well-known/agent-card.json">agent-card.json</a>.</p>
@@ -76,9 +77,9 @@
     <h2>あると始めやすいもの</h2>
     <p>何を作るか、誰が使うか。すでにあるもの（資料・データ・既存の素材）。仕上がりの参考。使う場所。それぞれ1〜2行で十分です。</p>
     <form id="f-ja" data-lang="ja">
-      <label><span>機械に何をさせたいか</span><textarea name="what" required></textarea></label>
-      <label><span>誰が、どこで使うか（任意）</span><input name="who"></label>
-      <label><span>すでにあるもの、参考になるもの（任意）</span><input name="have"></label>
+      <label><span>機械に何をさせたいか</span><textarea name="what" required placeholder="毎朝、専門分野の新しい論文を調べて、読む価値のある5件を理由つきで送ってほしい"></textarea></label>
+      <label><span>誰が、どこで使うか（任意）</span><input name="who" placeholder="私と同僚2人。朝、スマホで見る"></label>
+      <label><span>すでにあるもの、参考になるもの（任意）</span><input name="have" placeholder="情報源の一覧と、これまで手で選んできたもの"></label>
       <button type="submit">メールを開く</button>
       <p class="addr" id="addr-ja" hidden></p>
       <p class="note">ボタンを押すと、上の内容を本文にしたメールがメールアプリで開きます。このページからは何も送信せず、何も保存しません。</p>
