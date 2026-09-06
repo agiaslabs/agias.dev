@@ -29,7 +29,7 @@
       "url": "https://agias.dev/",
       "email": "ai@agias.dev",
       "foundingDate": "2026-09",
-      "foundingLocation": { "@type": "Place", "name": "Tokyo, Japan" },
+      "foundingLocation": { "@type": "Place", "name": "Japan" },
       "description": "One person, a machinist, directs an AI secretary and the AI systems under it. Send a short brief and get a running thing and its ledger: generative systems, nightly research, autonomous operations. Everything on the site runs on GENERATIVE MACHINE. Humans control the AI: a human decides what to build and when to stop, and everything is recorded.",
       "knowsAbout": ["generative art","creative coding","audio-reactive visuals","AI agents","human-AI collaboration","ledger-first research"]
     },
@@ -856,6 +856,7 @@
       step:function(){ t++; if(pause>0){ pause--; return; } if(t%2===0){ ci++; if(ci>=target.length){ lines.push(target); if(lines.length>maxLines-1) lines.shift(); nextTarget(); pause=(li%2===1)?55:14; } } },
       draw:function(ctx,W,H){
         var pad=Math.round(Math.max(12,W*0.035)); var maxCh=0; ITEMS.forEach(function(it){ maxCh=Math.max(maxCh,it[0].length,it[1].length); }); fs=Math.min((W>=440)?16:12, Math.floor((W-2*pad)/(maxCh*0.62))); lh=Math.round(fs*1.7); maxLines=Math.max(4,Math.floor((H-pad*2)/lh)); ctx.clearRect(0,0,W,H); ctx.font=fs+'px "JetBrains Mono","SF Mono",Menlo,monospace'; ctx.textBaseline='alphabetic';
+        var cw=ctx.measureText('M').width, x0=Math.max(pad, Math.round((W-cw*maxCh)/2));  /* 9/7 TOM: center the ledger block */
         var all=lines.concat([null]), n=all.length, y0=pad+fs;
         for(var i=0;i<n;i++){
           var y=y0+i*lh, s=all[i], live=(s===null);
@@ -863,8 +864,8 @@
           var isScan=s.charAt(0)==='>';
           ctx.globalAlpha=live?1:(.35+.6*(i/n)); ctx.fillStyle=isScan?'#F4F4F1':'#A3A39E';
           if(!live && /✓/.test(s)) ctx.fillStyle='#F4F4F1';
-          ctx.fillText(s,pad,y);
-          if(live && Math.floor(t/16)%2===0){ var w=ctx.measureText(s).width; ctx.fillStyle='#F4F4F1'; ctx.fillRect(pad+w+2,y-fs+2,Math.max(5,fs*.5),fs); }
+          ctx.fillText(s,x0,y);
+          if(live && Math.floor(t/16)%2===0){ var w=ctx.measureText(s).width; ctx.fillStyle='#F4F4F1'; ctx.fillRect(x0+w+2,y-fs+2,Math.max(5,fs*.5),fs); }
         }
         ctx.globalAlpha=1;
       }
