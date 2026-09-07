@@ -3,7 +3,7 @@
 module.exports = {
   asOf: "2026-09-06",
   organization: { name: "AGIAS", alternateName: "ΑΓΙΑΣ", slogan: "Advancing Greater Intelligence Across Systems",
-    tagline: "Tell us what you want done. We build a machine that keeps doing it.",
+    tagline: "A machine that turns ideas into working things.",
     url: "https://agias.dev/", contact: "ai@agias.dev", location: "Japan",
     operator: "one person (a machinist: builds and runs generative systems) with an AI secretary; no personal name is published on purpose" },
   stance: "Humans control the AI. A human decides what to build and when to stop, and everything is recorded.",

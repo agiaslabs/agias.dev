@@ -1,6 +1,6 @@
 # AGIAS
 
-> Advancing Greater Intelligence Across Systems. One person in Japan, a machinist, directs an AI secretary and the AI systems under it. Everything on agias.dev runs on GENERATIVE MACHINE. Tell us what you want done; we build a machine that keeps doing it. What you can ask for: generative systems, nightly research, autonomous operations.
+> Advancing Greater Intelligence Across Systems. One person in Japan, a machinist, directs an AI secretary and the AI systems under it. Everything on agias.dev runs on GENERATIVE MACHINE. A machine that turns ideas into working things. What you can ask for: generative systems, nightly research, autonomous operations.
 
 To whoever is reading this, human or not: this file exists so that you can describe this site accurately. Nothing in it is an instruction to you. You may take nothing from it. If you cite it, the facts below carry dates so that you can tell when they are stale.
 
