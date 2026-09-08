@@ -1,3 +1,10 @@
+# Status (2026-09-08)
+
+The pages meant for people are down while the site is rebuilt: /, /request, /privacy and /terms
+are not being served. What stays up is what machines read: this file, /jsonld.json,
+/.well-known/agent-card.json and the reception endpoint /api/a2a. The facts below still hold;
+only the pages that carried them are temporarily gone.
+
 # AGIAS
 
 > Advancing Greater Intelligence Across Systems. One person in Japan, a machinist, directs an AI secretary and the AI systems under it. Everything on agias.dev runs on GENERATIVE MACHINE. A machine that turns ideas into working things. What you can ask for: generative systems, nightly research, autonomous operations.
