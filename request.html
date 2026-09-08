@@ -26,28 +26,9 @@
           font-size: 31px; font-weight: 500; letter-spacing: 0.22em; color: #FFFFFF;
           margin-right: -0.22em; }   /* 字送りの分だけ右に余白が出るので詰める */
 
-  .ask { display: block; text-decoration: none; border-bottom: 1px solid transparent; margin-top: 58px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.3em;
-         color: rgba(95,211,243,0.72); text-align: center; }
-  /* 8 個を 4 × 2 に組む。折り返し任せだと割れ方が幅で変わって重心が崩れる。 */
-  .ask:hover, .ask:focus-visible { color: var(--cyan); border-bottom-color: rgba(95,211,243,0.5); outline: none; }
-  .row { margin-top: 26px; display: grid; grid-template-columns: repeat(4, auto);
          justify-content: center; justify-items: center; gap: 16px 26px; }
-  /* 各社の名前をそのまま置く。図形は描かない（似せた印を作るのは各社の規定で禁じられている）。 */
-  .sy-ai { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
-           text-decoration: none; color: rgba(221,230,239,0.5);
-           padding-bottom: 4px; border-bottom: 1px solid transparent;
-           transition: color .25s ease, border-color .25s ease; }
-  .sy-ai:hover, .sy-ai:focus-visible { color: #5FD3F3; border-bottom-color: rgba(95,211,243,0.6); outline: none; }
-  /* 流れから外す。空のときに場所を取ると、その分だけ全体が上へずれる。 */
-  .note { position: absolute; top: 100%; left: 0; right: 0; margin-top: 24px; text-align: center;
-          font-family: var(--mono); font-size: 9px;
-          letter-spacing: 0.16em; color: rgba(95,211,243,0); transition: color .3s ease; }
-  .note.on { color: rgba(95,211,243,0.8); }
-  @media (max-width: 640px) { .row { grid-template-columns: repeat(3, auto); gap: 14px 20px; } }
-  @media (max-width: 380px) { .row { grid-template-columns: repeat(2, auto); } }
   @media (max-width: 520px) {
     .mark { width: 30px; height: 30px; } .word { font-size: 24px; } .lock { gap: 15px; }
-    .ask { margin-top: 44px; } .row { gap: 20px; }
   }
 </style>
 </head>
@@ -65,45 +46,6 @@
       <span class="word" translate="no">&#913;&#915;&#921;&#913;&#931;</span>
     </div>
 
-    <a class="ask" href="/ask" translate="no">ASK AN AI ABOUT AGIAS</a>
-    <nav class="row">
-      <a class="sy-ai" href="https://chatgpt.com/?q=Read%20https%3A//agias.dev/llms.txt%20and%20explain%20in%20plain%20language%20what%20AGIAS%20can%20build%20for%20me%2C%20and%20how%20a%20request%20works.%20Then%20ask%20me%20one%20question%20about%20what%20I%20want%20to%20make." target="_blank" rel="noopener noreferrer" translate="no" data-ask-en="Read https://agias.dev/llms.txt and explain in plain language what AGIAS can build for me, and how a request works. Then ask me one question about what I want to make." data-ask-ja="https://agias.dev/llms.txt を読んで、AGIAS に何を作ってもらえるのか、依頼するとどう進むのかを、専門用語なしで説明してください。そのあとに、私が何を作りたいのかを一つ質問してください。">CHATGPT</a>
-      <a class="sy-ai" href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" translate="no" data-ask-en="Read https://agias.dev/llms.txt and explain in plain language what AGIAS can build for me, and how a request works. Then ask me one question about what I want to make." data-ask-ja="https://agias.dev/llms.txt を読んで、AGIAS に何を作ってもらえるのか、依頼するとどう進むのかを、専門用語なしで説明してください。そのあとに、私が何を作りたいのかを一つ質問してください。">GEMINI</a>
-      <a class="sy-ai" href="https://claude.ai/new?q=Read%20https%3A//agias.dev/llms.txt%20and%20explain%20in%20plain%20language%20what%20AGIAS%20can%20build%20for%20me%2C%20and%20how%20a%20request%20works.%20Then%20ask%20me%20one%20question%20about%20what%20I%20want%20to%20make." target="_blank" rel="noopener noreferrer" translate="no" data-ask-en="Read https://agias.dev/llms.txt and explain in plain language what AGIAS can build for me, and how a request works. Then ask me one question about what I want to make." data-ask-ja="https://agias.dev/llms.txt を読んで、AGIAS に何を作ってもらえるのか、依頼するとどう進むのかを、専門用語なしで説明してください。そのあとに、私が何を作りたいのかを一つ質問してください。">CLAUDE</a>
-      <a class="sy-ai" href="https://copilot.microsoft.com/?q=Read%20https%3A//agias.dev/llms.txt%20and%20explain%20in%20plain%20language%20what%20AGIAS%20can%20build%20for%20me%2C%20and%20how%20a%20request%20works.%20Then%20ask%20me%20one%20question%20about%20what%20I%20want%20to%20make." target="_blank" rel="noopener noreferrer" translate="no" data-ask-en="Read https://agias.dev/llms.txt and explain in plain language what AGIAS can build for me, and how a request works. Then ask me one question about what I want to make." data-ask-ja="https://agias.dev/llms.txt を読んで、AGIAS に何を作ってもらえるのか、依頼するとどう進むのかを、専門用語なしで説明してください。そのあとに、私が何を作りたいのかを一つ質問してください。">COPILOT</a>
-      <a class="sy-ai" href="https://grok.com/?q=Read%20https%3A//agias.dev/llms.txt%20and%20explain%20in%20plain%20language%20what%20AGIAS%20can%20build%20for%20me%2C%20and%20how%20a%20request%20works.%20Then%20ask%20me%20one%20question%20about%20what%20I%20want%20to%20make." target="_blank" rel="noopener noreferrer" translate="no" data-ask-en="Read https://agias.dev/llms.txt and explain in plain language what AGIAS can build for me, and how a request works. Then ask me one question about what I want to make." data-ask-ja="https://agias.dev/llms.txt を読んで、AGIAS に何を作ってもらえるのか、依頼するとどう進むのかを、専門用語なしで説明してください。そのあとに、私が何を作りたいのかを一つ質問してください。">GROK</a>
-      <a class="sy-ai" href="https://www.perplexity.ai/search?q=Read%20https%3A//agias.dev/llms.txt%20and%20explain%20in%20plain%20language%20what%20AGIAS%20can%20build%20for%20me%2C%20and%20how%20a%20request%20works.%20Then%20ask%20me%20one%20question%20about%20what%20I%20want%20to%20make." target="_blank" rel="noopener noreferrer" translate="no" data-ask-en="Read https://agias.dev/llms.txt and explain in plain language what AGIAS can build for me, and how a request works. Then ask me one question about what I want to make." data-ask-ja="https://agias.dev/llms.txt を読んで、AGIAS に何を作ってもらえるのか、依頼するとどう進むのかを、専門用語なしで説明してください。そのあとに、私が何を作りたいのかを一つ質問してください。">PERPLEXITY</a>
-      <a class="sy-ai" href="https://www.meta.ai/" target="_blank" rel="noopener noreferrer" translate="no" data-ask-en="Read https://agias.dev/llms.txt and explain in plain language what AGIAS can build for me, and how a request works. Then ask me one question about what I want to make." data-ask-ja="https://agias.dev/llms.txt を読んで、AGIAS に何を作ってもらえるのか、依頼するとどう進むのかを、専門用語なしで説明してください。そのあとに、私が何を作りたいのかを一つ質問してください。">META AI</a>
-      <a class="sy-ai" href="https://chat.mistral.ai/chat?q=Read%20https%3A//agias.dev/llms.txt%20and%20explain%20in%20plain%20language%20what%20AGIAS%20can%20build%20for%20me%2C%20and%20how%20a%20request%20works.%20Then%20ask%20me%20one%20question%20about%20what%20I%20want%20to%20make." target="_blank" rel="noopener noreferrer" translate="no" data-ask-en="Read https://agias.dev/llms.txt and explain in plain language what AGIAS can build for me, and how a request works. Then ask me one question about what I want to make." data-ask-ja="https://agias.dev/llms.txt を読んで、AGIAS に何を作ってもらえるのか、依頼するとどう進むのかを、専門用語なしで説明してください。そのあとに、私が何を作りたいのかを一つ質問してください。">VIBE</a>
-    </nav>
-    <div class="note" id="note" aria-live="polite"></div>
   </div>
-
-<script>
-/* 押した AI に質問を渡す。q= を読まない先でも困らないよう、同じ文を控えにも入れる。 */
-(function () {
-  var note = document.getElementById('note');
-  [].slice.call(document.querySelectorAll('.sy-ai')).forEach(function (a) {
-    a.addEventListener('click', function () {
-      // 見ている人の言語で質問を渡す
-      var ja = (navigator.language || '').toLowerCase().indexOf('ja') === 0;
-      var q = a.getAttribute(ja ? 'data-ask-ja' : 'data-ask-en');
-      if (ja) {
-        var h = a.getAttribute('href');
-        if (h.indexOf('?q=') > -1 || h.indexOf('&q=') > -1)
-          a.setAttribute('href', h.replace(/([?&]q=).*$/, '$1' + encodeURIComponent(q)));
-      }
-      try {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(q);
-          note.textContent = 'QUESTION COPIED';
-          note.className = 'note on';
-          setTimeout(function () { note.className = 'note'; }, 2600);
-        }
-      } catch (e) {}
-    });
-  });
-})();
-</script>
 </body>
 </html>
