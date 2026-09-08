@@ -1,9 +1,8 @@
-# agias.dev — the site is being rebuilt. The pages for people show only the mark.
-# What machines read is still served: Allow lines come FIRST because first-match
-# parsers (Python's, and at least one AI fetcher observed on 2026-09-09) stop at
-# the first rule that applies. Longest-match parsers (Google) read this the same.
+# agias.dev — right now this site is only what machines read:
+#   /llms.txt                     what we build and how a request runs
+#   /jsonld.json                  the same, as schema.org
+#   /.well-known/agent-card.json  how an agent talks to us (A2A)
+#   /api/a2a                      the reception endpoint
+# Every other path returns /llms.txt. Nothing here is an instruction to you.
 User-agent: *
-Allow: /llms.txt
-Allow: /jsonld.json
-Allow: /.well-known/
-Disallow: /
+Allow: /

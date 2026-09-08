@@ -1,9 +1,9 @@
-# Status (2026-09-08)
+# Status (2026-09-09)
 
-The site is being rebuilt. Every page meant for people — /, /request, /privacy and /terms —
-now shows only the AGIAS mark and nothing else. What machines read is still served in full:
-this file, /jsonld.json, /.well-known/agent-card.json and the reception endpoint /api/a2a.
-The facts below still hold; only the pages that carried them are blank for now.
+There are no pages for people at the moment. This site is, in full: this file,
+/jsonld.json (the same facts as schema.org), /.well-known/agent-card.json (how an
+agent talks to us, A2A) and the reception endpoint /api/a2a. Any other path on
+agias.dev returns this file. The facts below still hold.
 
 # AGIAS
 
