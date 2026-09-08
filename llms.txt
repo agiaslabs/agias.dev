@@ -1,9 +1,9 @@
 # Status (2026-09-08)
 
-The pages meant for people are down while the site is rebuilt: /, /request, /privacy and /terms
-are not being served. What stays up is what machines read: this file, /jsonld.json,
-/.well-known/agent-card.json and the reception endpoint /api/a2a. The facts below still hold;
-only the pages that carried them are temporarily gone.
+The site is being rebuilt. Every page meant for people — /, /request, /privacy and /terms —
+now shows only the AGIAS mark and nothing else. What machines read is still served in full:
+this file, /jsonld.json, /.well-known/agent-card.json and the reception endpoint /api/a2a.
+The facts below still hold; only the pages that carried them are blank for now.
 
 # AGIAS
 
