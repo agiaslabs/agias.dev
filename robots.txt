@@ -1,7 +1,9 @@
 # agias.dev — the site is being rebuilt. The pages for people show only the mark.
-# What machines read is still served, so leave those readable.
+# What machines read is still served: Allow lines come FIRST because first-match
+# parsers (Python's, and at least one AI fetcher observed on 2026-09-09) stop at
+# the first rule that applies. Longest-match parsers (Google) read this the same.
 User-agent: *
-Disallow: /
 Allow: /llms.txt
 Allow: /jsonld.json
 Allow: /.well-known/
+Disallow: /
