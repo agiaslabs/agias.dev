@@ -13,32 +13,89 @@
   @font-face { font-family: 'AGIAS Greek'; font-style: normal; font-weight: 100 800; font-display: swap;
     src: url(/assets/fonts/jetbrains-mono-greek.woff2) format('woff2');
     unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF; }
-  :root { color-scheme: dark; }
+  :root { color-scheme: dark; --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
   html, body { margin: 0; height: 100%; background: #060910; }
   body { min-height: 100vh; }
   /* 画面の中央に固定する。body の高さの解釈（100% と 100dvh の差、モバイルの
      ツールバーの出入り）に左右されないよう、視点そのものの中央に置く。 */
-  .lock { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-          display: flex; align-items: center; gap: 20px; }
+  .center { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            display: flex; flex-direction: column; align-items: center; width: max-content; max-width: 92vw; }
+  .lock { display: flex; align-items: center; gap: 20px; }
   .mark { width: 38px; height: 38px; display: block; }
-  .word { font-family: 'AGIAS Greek', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  .word { font-family: 'AGIAS Greek', var(--mono);
           font-size: 31px; font-weight: 500; letter-spacing: 0.22em; color: #FFFFFF;
-          /* letter-spacing の分だけ右に余白が出るので詰める */
-          margin-right: -0.22em; }
-  @media (max-width: 520px) { .mark { width: 30px; height: 30px; } .word { font-size: 24px; } .lock { gap: 15px; } }
+          margin-right: -0.22em; }   /* 字送りの分だけ右に余白が出るので詰める */
+
+  .ask { margin-top: 58px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.3em;
+         color: rgba(95,211,243,0.72); text-align: center; }
+  .row { margin-top: 22px; display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
+  .sy-ai { display: flex; flex-direction: column; align-items: center; gap: 9px;
+           text-decoration: none; color: rgba(221,230,239,0.52);
+           transition: color .25s ease, transform .25s ease; }
+  .sy-ai span { font-family: var(--mono); font-size: 8px; letter-spacing: 0.18em; }
+  .sy-ai:hover, .sy-ai:focus-visible { color: #5FD3F3; transform: translateY(-2px); outline: none; }
+  .sy-ai:focus-visible span { text-decoration: underline; }
+  /* 流れから外す。空のときに場所を取ると、その分だけ全体が上へずれる。 */
+  .note { position: absolute; top: 100%; left: 0; right: 0; margin-top: 24px; text-align: center;
+          font-family: var(--mono); font-size: 9px;
+          letter-spacing: 0.16em; color: rgba(95,211,243,0); transition: color .3s ease; }
+  .note.on { color: rgba(95,211,243,0.8); }
+  @media (max-width: 520px) {
+    .mark { width: 30px; height: 30px; } .word { font-size: 24px; } .lock { gap: 15px; }
+    .ask { margin-top: 44px; } .row { gap: 20px; }
+  }
 </style>
 </head>
 <body>
-  <div class="lock" role="img" aria-label="AGIAS">
-    <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
-      <clipPath id="mk"><rect x="0" y="0" width="32" height="27"/></clipPath>
-      <g clip-path="url(#mk)">
-        <path d="M3 31 L16 4 L29 31" fill="none" stroke="#DDE6EF" stroke-width="2.5"
-              stroke-linejoin="miter" stroke-miterlimit="8" stroke-linecap="butt"/>
-        <path d="M16 16 V31" fill="none" stroke="#DDE6EF" stroke-width="2.5" stroke-linecap="butt"/>
-      </g>
-    </svg>
-    <span class="word" translate="no">&#913;&#915;&#921;&#913;&#931;</span>
+  <div class="center">
+    <div class="lock" role="img" aria-label="AGIAS">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+        <clipPath id="mk"><rect x="0" y="0" width="32" height="27"/></clipPath>
+        <g clip-path="url(#mk)">
+          <path d="M3 31 L16 4 L29 31" fill="none" stroke="#DDE6EF" stroke-width="2.5"
+                stroke-linejoin="miter" stroke-miterlimit="8" stroke-linecap="butt"/>
+          <path d="M16 16 V31" fill="none" stroke="#DDE6EF" stroke-width="2.5" stroke-linecap="butt"/>
+        </g>
+      </svg>
+      <span class="word" translate="no">&#913;&#915;&#921;&#913;&#931;</span>
+    </div>
+
+    <div class="ask" translate="no">ASK AN AI ABOUT AGIAS</div>
+    <nav class="row">
+      <a class="sy-ai" href="https://chatgpt.com/?q=Read%20https%3A//agias.dev/llms.txt%20and%20explain%20in%20plain%20language%20what%20AGIAS%20can%20build%20for%20me%2C%20and%20how%20a%20request%20works.%20Then%20ask%20me%20one%20question%20about%20what%20I%20want%20to%20make." target="_blank" rel="noopener noreferrer" data-ask-en="Read https://agias.dev/llms.txt and explain in plain language what AGIAS can build for me, and how a request works. Then ask me one question about what I want to make." data-ask-ja="https://agias.dev/llms.txt を読んで、AGIAS に何を作ってもらえるのか、依頼するとどう進むのかを、専門用語なしで説明してください。そのあとに、私が何を作りたいのかを一つ質問してください。" aria-label="CHATGPT"><svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M16 4 L27 10.2 V22.8 L16 29 L5 22.8 V10.2 Z"/><path d="M16 4 V16.5 L27 22.8"/><path d="M16 16.5 L5 22.8"/></svg><span translate="no">CHATGPT</span></a>
+      <a class="sy-ai" href="https://claude.ai/new?q=Read%20https%3A//agias.dev/llms.txt%20and%20explain%20in%20plain%20language%20what%20AGIAS%20can%20build%20for%20me%2C%20and%20how%20a%20request%20works.%20Then%20ask%20me%20one%20question%20about%20what%20I%20want%20to%20make." target="_blank" rel="noopener noreferrer" data-ask-en="Read https://agias.dev/llms.txt and explain in plain language what AGIAS can build for me, and how a request works. Then ask me one question about what I want to make." data-ask-ja="https://agias.dev/llms.txt を読んで、AGIAS に何を作ってもらえるのか、依頼するとどう進むのかを、専門用語なしで説明してください。そのあとに、私が何を作りたいのかを一つ質問してください。" aria-label="CLAUDE"><svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><g stroke-linecap="round"><path d="M16 4 V12.6"/><path d="M16 19.4 V28"/><path d="M4 16 H12.6"/><path d="M19.4 16 H28"/><path d="M7.5 7.5 L13.6 13.6"/><path d="M18.4 18.4 L24.5 24.5"/><path d="M24.5 7.5 L18.4 13.6"/><path d="M13.6 18.4 L7.5 24.5"/></g></svg><span translate="no">CLAUDE</span></a>
+      <a class="sy-ai" href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" data-ask-en="Read https://agias.dev/llms.txt and explain in plain language what AGIAS can build for me, and how a request works. Then ask me one question about what I want to make." data-ask-ja="https://agias.dev/llms.txt を読んで、AGIAS に何を作ってもらえるのか、依頼するとどう進むのかを、専門用語なしで説明してください。そのあとに、私が何を作りたいのかを一つ質問してください。" aria-label="GEMINI"><svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M16 3 C17.1 11.4 20.6 14.9 29 16 C20.6 17.1 17.1 20.6 16 29 C14.9 20.6 11.4 17.1 3 16 C11.4 14.9 14.9 11.4 16 3 Z"/></svg><span translate="no">GEMINI</span></a>
+      <a class="sy-ai" href="https://grok.com/?q=Read%20https%3A//agias.dev/llms.txt%20and%20explain%20in%20plain%20language%20what%20AGIAS%20can%20build%20for%20me%2C%20and%20how%20a%20request%20works.%20Then%20ask%20me%20one%20question%20about%20what%20I%20want%20to%20make." target="_blank" rel="noopener noreferrer" data-ask-en="Read https://agias.dev/llms.txt and explain in plain language what AGIAS can build for me, and how a request works. Then ask me one question about what I want to make." data-ask-ja="https://agias.dev/llms.txt を読んで、AGIAS に何を作ってもらえるのか、依頼するとどう進むのかを、専門用語なしで説明してください。そのあとに、私が何を作りたいのかを一つ質問してください。" aria-label="GROK"><svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 5 L26 27"/><path d="M26 5 L6 27"/></svg><span translate="no">GROK</span></a>
+      <a class="sy-ai" href="https://www.perplexity.ai/search?q=Read%20https%3A//agias.dev/llms.txt%20and%20explain%20in%20plain%20language%20what%20AGIAS%20can%20build%20for%20me%2C%20and%20how%20a%20request%20works.%20Then%20ask%20me%20one%20question%20about%20what%20I%20want%20to%20make." target="_blank" rel="noopener noreferrer" data-ask-en="Read https://agias.dev/llms.txt and explain in plain language what AGIAS can build for me, and how a request works. Then ask me one question about what I want to make." data-ask-ja="https://agias.dev/llms.txt を読んで、AGIAS に何を作ってもらえるのか、依頼するとどう進むのかを、専門用語なしで説明してください。そのあとに、私が何を作りたいのかを一つ質問してください。" aria-label="PERPLEXITY"><svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M16 4 V28"/><path d="M16 9.5 H6.5 V22.5 H16"/><path d="M16 9.5 H25.5 V22.5 H16"/></svg><span translate="no">PERPLEXITY</span></a>
+    </nav>
+    <div class="note" id="note" aria-live="polite"></div>
   </div>
+
+<script>
+/* 押した AI に質問を渡す。q= を読まない先でも困らないよう、同じ文を控えにも入れる。 */
+(function () {
+  var note = document.getElementById('note');
+  [].slice.call(document.querySelectorAll('.sy-ai')).forEach(function (a) {
+    a.addEventListener('click', function () {
+      // 見ている人の言語で質問を渡す
+      var ja = (navigator.language || '').toLowerCase().indexOf('ja') === 0;
+      var q = a.getAttribute(ja ? 'data-ask-ja' : 'data-ask-en');
+      if (ja) {
+        var h = a.getAttribute('href');
+        if (h.indexOf('?q=') > -1 || h.indexOf('&q=') > -1)
+          a.setAttribute('href', h.replace(/([?&]q=).*$/, '$1' + encodeURIComponent(q)));
+      }
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(q);
+          note.textContent = 'QUESTION COPIED';
+          note.className = 'note on';
+          setTimeout(function () { note.className = 'note'; }, 2600);
+        }
+      } catch (e) {}
+    });
+  });
+})();
+</script>
 </body>
 </html>

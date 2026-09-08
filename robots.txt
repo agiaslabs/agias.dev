@@ -1,3 +1,7 @@
-# agias.dev — the site is being rebuilt. Nothing here to index right now.
+# agias.dev — the site is being rebuilt. The pages for people show only the mark.
+# What machines read is still served, so leave those readable.
 User-agent: *
 Disallow: /
+Allow: /llms.txt
+Allow: /jsonld.json
+Allow: /.well-known/
