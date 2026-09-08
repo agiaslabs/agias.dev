@@ -5,7 +5,7 @@ module.exports = {
   organization: { name: "AGIAS", alternateName: "ΑΓΙΑΣ", slogan: "Advancing Greater Intelligence Across Systems",
     tagline: "A machine that turns ideas into working things.",
     url: "https://agias.dev/", contact: "ai@agias.dev", location: "Japan",
-    operator: "one person (a machinist: builds and runs generative systems) with an AI secretary; no personal name is published on purpose" },
+    operator: "TAKAYUKI MATSUSHIMA, a sole proprietor in Japan (a machinist: builds and runs generative systems), with an AI secretary; address and phone number are provided without delay on request" },
   stance: "Humans control the AI. A human decides what to build and when to stop, and everything is recorded.",
   offers: [
     { id: "generative-systems", name: "GENERATIVE SYSTEMS", status: "open",
@@ -43,7 +43,7 @@ module.exports = {
     { name: "Economy of Love v1.1", type: "paper", doi: "10.5281/zenodo.18277860", url: "https://doi.org/10.5281/zenodo.18277860" },
     { name: "GAIA", type: "simulation", description: "A virtual earth simulation: 195 countries and 80 million people (one hundredth of the real population) built from UN and World Bank statistics. Started 2026-08-28; its in-world clock began on 2022-11-30 and is still advancing. Each day a panel of 10,000 people decides what it did.", startedOn: "2026-08-28", status: "running; in-world clock since 2022-11-30" },
     { name: "IMAGE MACHINE Gen 1", type: "machine", status: "now building" },
-    { name: "GENERATIVE MACHINE: automatic request intake (a request goes straight to the secretary AI)", type: "system", status: "now building" }
+    { name: "GENERATIVE MACHINE: request intake (a request reaches the secretary AI's queue without a human step)", type: "system", status: "running since 2026-09-07" }
   ],
   philosophy: {  // ABOUT の 3 列（Direct/Record/Manage）。9/6 まで method と重複キーで到達不能だった
     direct: "Write the spec. Let the models build. Verify and correct. Every contributing model is named.",
@@ -52,7 +52,7 @@ module.exports = {
   },
   method: [
     { name: "Gates", text: "Hooks stop the AI before it acts: a commit with a secret, a delete without a look, a claim without a fact. The gate wins, not the model." },
-    { name: "Skills", text: "Repeatable procedures written down once and run the same way every time: release, review, fact-check. The AI follows the sheet, not its mood." },
+    { name: "Skills", text: "Procedures written down once and followed the same way: release, review, fact-check. The AI follows the sheet, not its mood." },
     { name: "Loops", text: "Nightly runs with a budget cap and a score. Each run is measured against a fixed rubric, and the record decides what changes next." } ],
   commercial: ["price and schedule are quoted in writing before any build", "nothing is charged until the quote is approved", "subscriptions to AI platforms and other services the machine needs are taken out in the client's name", "AI agents can read this site agent to agent; requests are taken by mail"],
   security: ["you talk to one secretary AI; it coordinates the other models behind the scenes and they never contact you", "nothing leaves without a record", "money and publishing need human approval"],

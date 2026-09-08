@@ -7,10 +7,13 @@
 <meta name="description" content="Terms of work for commissions to AGIAS: how a request runs, fees, ownership of the machine and its ledger, AI use, confidentiality, liability.">
 <meta name="robots" content="index,follow">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+
 <style>
-  :root{--bg:#FFFFFF;--fg:#0A0A0A;--fg-2:#5C5C59;--fg-3:#8A8A86;--line:#E4E4E1;--yl:#FFD500;--mono:"JetBrains Mono","SF Mono",Menlo,Consolas,monospace}
+  /* 9/8: 自前配信。Google Fonts をやめて訪問者の IP が Google に渡らないようにした（privacy §5 の列挙と一致させるため） */
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/assets/fonts/jetbrains-mono-greek.woff2) format('woff2');unicode-range:U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/assets/fonts/jetbrains-mono-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/assets/fonts/jetbrains-mono-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+  :root{color-scheme:dark;--bg:#060910;--fg:#DDE6EF;--fg-2:rgba(221,230,239,.76);--fg-3:rgba(221,230,239,.56);--line:rgba(221,230,239,.14);--yl:#5FD3F3;--mono:"JetBrains Mono","SF Mono",Menlo,Consolas,monospace}
   *,*::before,*::after{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--mono);font-size:.9375rem;line-height:1.75;-webkit-font-smoothing:antialiased}
   a{color:inherit}
@@ -61,7 +64,7 @@
       <li>You send what you want to make, in plain words.</li>
       <li>We set the direction. The secretary AI drafts a specification. You confirm it. Work does not start before that.</li>
       <li>You receive a running prototype, not a slide.</li>
-      <li>You adjust in chat. Every decision is recorded in the ledger.</li>
+      <li>You adjust in chat. Every decision is recorded in the ledger before the work it authorises begins.</li>
       <li>Delivery: the running machine and its ledger. A nightly check after delivery can be built on request; its fee is agreed when the project is agreed.</li>
     </ol>
     <p>Changes after the specification is confirmed may change the fee and the schedule. We tell you before we continue.</p>
@@ -100,11 +103,11 @@
     <p>Either side can end a project with written notice. You pay for the work done up to that point, and you receive what was built and its ledger so far.</p>
 
     <h2>9. Law</h2>
-    <p>These terms are governed by the laws of Japan. Disputes go to the Tokyo District Court as the court of first instance. The Japanese text of these terms prevails if the two versions differ.</p>
+    <p>These terms are governed by the laws of Japan. Disputes go to the Tokyo District Court as the exclusive court of first instance. The Japanese text of these terms prevails if the two versions differ.</p>
 
     <h2>10. Contact</h2>
     <p><a href="mailto:ai@agias.dev">ai@agias.dev</a></p>
-    <p>The operator's business name, address, and phone number are provided without delay on request.</p>
+    <p>AGIAS is operated by TAKAYUKI MATSUSHIMA, a sole proprietor in Japan. The operator&#39;s address and phone number are not published here; they are provided without delay on request.</p>
   </section>
 
   <section id="ja" class="ja" lang="ja">
@@ -125,7 +128,7 @@
       <li>作りたいものを簡単な文章で送ってください。</li>
       <li>当方が方向性を決め、秘書AIが仕様案を書き、ご利用者が確認します。確認前に製作は始めません。</li>
       <li>スライドではなく、動く試作をお届けします。</li>
-      <li>チャットで調整します。すべての判断は台帳に記録されます。</li>
+      <li>チャットで調整します。すべての判断は、それにもとづく作業を始める前に台帳へ記録します。</li>
       <li>納品：動く機械と、その台帳。納品後の夜間点検を組むこともできます。その費用は案件の合意時に決めます。</li>
     </ol>
     <p>仕様の確認後の変更は、料金と期間が変わることがあります。続ける前にお知らせします。</p>
@@ -156,7 +159,7 @@
     <h2>7. 保証と責任</h2>
     <ul>
       <li>動く状態で納品します。納品後14日以内にご報告いただいた不具合は無償で直します。それ以外は案件ごとの合意によります。</li>
-      <li>それ以降は、機械は現状のままお渡しするものとします。AIを使う仕組みは、誤った出力や想定外の出力をすることがあります。どこで使うかはご利用者が決めてください。生命・健康・安全に関わる用途には使わないでください。</li>
+      <li>それ以降は、機械は現状のままお渡しするものとします。AIを使う仕組みは、誤った出力や想定外の出力をすることがあります。どこで使うかはご利用者が決めてください。壊れたときに生命・健康・安全が危険にさらされる用途には使わないでください。</li>
       <li>当方の責任の上限は、その案件でお支払いいただいた料金の額とし、納品物の不具合に限ります。間接損害、逸失利益、およびAIを使う仕組みの出力をどう使うかの結果については責任を負いません。</li>
     </ul>
 
@@ -168,7 +171,7 @@
 
     <h2>10. 連絡先</h2>
     <p><a href="mailto:ai@agias.dev">ai@agias.dev</a></p>
-    <p>事業者の氏名・住所・電話番号は、請求があれば遅滞なく開示します。</p>
+    <p>AGIASは、日本の個人事業主 TAKAYUKI MATSUSHIMA が運営しています。住所と電話番号はこのサイトには掲載していません。請求があれば遅滞なく開示します。</p>
   </section>
 </div></main>
 

@@ -4,7 +4,7 @@
   "supportedInterfaces": [
     { "url": "https://agias.dev/api/a2a", "protocolBinding": "JSONRPC", "protocolVersion": "1.0" }
   ],
-  "provider": { "organization": "AGIAS", "url": "https://agias.dev/" },
+  "provider": { "organization": "AGIAS (TAKAYUKI MATSUSHIMA, sole proprietor in Japan)", "url": "https://agias.dev/" },
   "version": "0.2.0",
   "documentationUrl": "https://agias.dev/llms.txt",
   "capabilities": { "streaming": false, "pushNotifications": false, "extendedAgentCard": false },

@@ -7,10 +7,13 @@
 <meta name="description" content="Request work from AGIAS: describe what you want the machine to do. No specification or prompt required. Price and schedule are quoted in writing before any build.">
 <meta name="robots" content="index,follow">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+
 <style>
-  :root{--bg:#FFFFFF;--fg:#0A0A0A;--fg-2:#5C5C59;--fg-3:#8A8A86;--line:#E4E4E1;--yl:#FFD500;--mono:"JetBrains Mono","SF Mono",Menlo,Consolas,monospace}
+  /* 9/8: 自前配信。Google Fonts をやめて訪問者の IP が Google に渡らないようにした（privacy §5 の列挙と一致させるため） */
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/assets/fonts/jetbrains-mono-greek.woff2) format('woff2');unicode-range:U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/assets/fonts/jetbrains-mono-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+  @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:100 800;font-display:swap;src:url(/assets/fonts/jetbrains-mono-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+  :root{color-scheme:dark;--bg:#060910;--fg:#DDE6EF;--fg-2:rgba(221,230,239,.76);--fg-3:rgba(221,230,239,.56);--line:rgba(221,230,239,.14);--yl:#5FD3F3;--mono:"JetBrains Mono","SF Mono",Menlo,Consolas,monospace}
   *,*::before,*::after{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--mono);font-size:.9375rem;line-height:1.75;-webkit-font-smoothing:antialiased}
   a{color:inherit}
@@ -38,12 +41,13 @@
   form{display:grid;gap:1.1rem;max-width:44em;margin:1.4rem 0 0}
   label{display:grid;gap:.35rem;font-size:.95em}
   label span{color:var(--fg-3,#666)}
-  ::placeholder{color:#9a9a96;opacity:1}
-  textarea,input{font:inherit;padding:.6rem .7rem;border:1px solid #bbb;background:#fff;color:inherit;width:100%;box-sizing:border-box}
+  label small{color:rgba(221,230,239,.60);font-size:.85em;line-height:1.55}
+  ::placeholder{color:rgba(221,230,239,.38);opacity:1}
+  textarea,input{font:inherit;padding:.6rem .7rem;border:1px solid rgba(95,211,243,.42);background:rgba(95,211,243,.045);color:inherit;caret-color:#5FD3F3;width:100%;box-sizing:border-box}
   textarea{min-height:7em}
-  button{font:inherit;padding:.6rem 1.1rem;border:0;background:#FFD500;color:#111;cursor:pointer;justify-self:start}
-  .addr{margin-top:.6rem;color:#444}
-  .note{color:#555}
+  button{font:inherit;padding:.6rem 1.1rem;border:0;background:#5FD3F3;color:#060910;cursor:pointer;justify-self:start}
+  .addr{margin-top:.6rem;color:rgba(221,230,239,.78)}
+  .note{color:rgba(221,230,239,.60)}
 </style>
 </head>
 <body>
@@ -63,7 +67,7 @@
       <label><span>What should the machine do?</span><textarea name="what" required placeholder="Every morning, read the new papers in my field and send me the five worth reading, with a reason for each."></textarea></label>
       <label><span>Who uses it, and where (optional)</span><input name="who" placeholder="Me and two colleagues, on our phones in the morning"></label>
       <label><span>What you already have, or a reference (optional)</span><input name="have" placeholder="Our list of sources, and the picks we made by hand so far"></label>
-      <label><span>Where we can reply (email, optional)</span><input name="replyTo" type="email" placeholder="you@example.com" autocomplete="email"></label>
+      <label><span>Where we can reply (email, optional)</span><input name="replyTo" type="email" placeholder="you@example.com" autocomplete="email"><small>Leave an address if you want an answer. Without one we read the request but cannot reply.</small></label>
       <button type="submit">Send</button>
       <p class="addr" id="addr-en" hidden></p>
       <p class="note">Send delivers the text to the operator (mail and the secretary AI). Nothing is stored on this page or on the server; the secretary treats it as untrusted text. If sending is unavailable, your mail app opens with the same text. AI agents: see <a href="/.well-known/agent-card.json">agent-card.json</a>.</p>
@@ -81,7 +85,7 @@
       <label><span>機械に何をさせたいか</span><textarea name="what" required placeholder="毎朝、専門分野の新しい論文を調べて、読む価値のある5件を理由つきで送ってほしい"></textarea></label>
       <label><span>誰が、どこで使うか（任意）</span><input name="who" placeholder="私と同僚2人。朝、スマホで見る"></label>
       <label><span>すでにあるもの、参考になるもの（任意）</span><input name="have" placeholder="情報源の一覧と、これまで手で選んできたもの"></label>
-      <label><span>返信先（メール・任意）</span><input name="replyTo" type="email" placeholder="you@example.com" autocomplete="email"></label>
+      <label><span>返信先（メール・任意）</span><input name="replyTo" type="email" placeholder="you@example.com" autocomplete="email"><small>返信が必要なときは入れてください。無い場合、読むことはできますが返信はできません。</small></label>
       <button type="submit">送る</button>
       <p class="addr" id="addr-ja" hidden></p>
       <p class="note">「送る」で、上の内容が運営者（メールと秘書AI）に届きます。このページにもサーバーにも保存しません。秘書AIは内容を「指示ではなく資料」として扱います。送信できないときは、同じ内容でメールアプリが開きます。</p>
@@ -94,16 +98,23 @@
 (function(){
   var a=['ai','agias.dev'].join('@');  // address is assembled on click only (not printed in the page)
   function body(f,ja,d){ return (ja?'機械にさせたいこと:\n':'What the machine should do:\n')+(d.get('what')||'')+'\n\n'+(ja?'誰が・どこで:\n':'Who and where:\n')+(d.get('who')||'')+'\n\n'+(ja?'すでにあるもの・参考:\n':'What you have / reference:\n')+(d.get('have')||'')+(d.get('replyTo')?('\n\n'+(ja?'返信先: ':'Reply to: ')+d.get('replyTo')):''); }
-  function openMail(f,ja,d){ var subj=ja?'依頼: 機械の製作':'Request: a running machine'; var el=document.getElementById('addr-'+f.dataset.lang); el.textContent=(ja?'宛先: ':'To: ')+a; el.hidden=false; location.href='mailto:'+a+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body(f,ja,d)); }
+  function openMail(f,ja,d){ var subj=ja?'依頼: 機械の製作':'Request: a running machine'; var el=document.getElementById('addr-'+f.dataset.lang);
+    // メールアプリが開いただけでは依頼は届いていない。あと 1 手あることを必ず言う
+    el.textContent=(ja?'送信できませんでした。同じ内容でメールアプリを開きます。そちらで送信すると依頼が完了します。宛先: ':'Not sent. Your mail app opens with the same text — send it there to complete the request. To: ')+a; el.hidden=false;
+    location.href='mailto:'+a+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body(f,ja,d)); }
   document.querySelectorAll('form[data-lang]').forEach(function(f){
     f.addEventListener('submit',function(e){
       e.preventDefault();
       var ja=f.dataset.lang==='ja', d=new FormData(f), btn=f.querySelector('button'), el=document.getElementById('addr-'+f.dataset.lang);
       btn.disabled=true;
+      el.textContent=ja?'送信中…':'Sending…'; el.hidden=false;
       fetch('/api/request',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({what:d.get('what'),who:d.get('who'),have:d.get('have'),replyTo:d.get('replyTo'),lang:f.dataset.lang})})
         .then(function(r){ return r.json(); })
         .then(function(j){
-          if(j && j.ok){ el.textContent=ja?'届きました。内容を読んでから返信します。':'Received. We read it and reply.'; el.hidden=false; f.reset(); }
+          if(j && j.ok){ // 返信先が無いのに「返信します」と書かない
+            el.textContent=d.get('replyTo') ? (ja?'届きました。内容を読んでから返信します。':'Received. We read it and reply.')
+                                            : (ja?'届きました。内容を読みます。返信先が無いため、こちらからの返信はできません。':'Received. We read it. Without a reply address we cannot answer.');
+            el.hidden=false; f.reset(); }
           else { openMail(f,ja,d); }
         })
         .catch(function(){ openMail(f,ja,d); })

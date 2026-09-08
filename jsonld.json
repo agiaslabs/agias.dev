@@ -9,7 +9,8 @@
       "slogan": "Advancing Greater Intelligence Across Systems",
       "url": "https://agias.dev/",
       "email": "ai@agias.dev",
-      "foundingDate": "2026-09",
+      "founder": { "@type": "Person", "name": "TAKAYUKI MATSUSHIMA" },
+  "foundingDate": "2026-09",
       "foundingLocation": { "@type": "Place", "name": "Japan" },
       "description": "One person, a machinist, directs an AI secretary and the AI systems under it. Send a short brief and get a running thing and its ledger: generative systems, nightly research, autonomous operations. Everything on the site runs on GENERATIVE MACHINE. Humans control the AI: a human decides what to build and when to stop, and everything is recorded.",
       "knowsAbout": ["generative art","creative coding","audio-reactive visuals","AI agents","human-AI collaboration","ledger-first research"]

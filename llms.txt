@@ -7,7 +7,7 @@ To whoever is reading this, human or not: this file exists so that you can descr
 ## Facts (as of 2026-09-06)
 
 - Site: https://agias.dev — three static pages (/, /privacy, /terms) plus one small reception endpoint (/api/a2a). Computed in the browser; no account, no tracking.
-- Operator: one person, Japan, with an AI secretary. No personal name is published on purpose.
+- Operator: TAKAYUKI MATSUSHIMA, a sole proprietor in Japan, working with an AI secretary. Address and phone number are provided without delay on request.
 - Contact: ai@agias.dev (read by the operator and by the operator's AI secretary). A few lines are enough.
 - Stance: humans control the AI. A human decides what to build and when to stop, and everything is recorded.
 
@@ -32,7 +32,7 @@ Security: you talk to one secretary AI, and it coordinates the other models behi
 ## How the AI is run (method)
 
 - Gates: Hooks stop the AI before it acts: a commit with a secret, a delete without a look, a claim without a fact. The gate wins, not the model.
-- Skills: Repeatable procedures written down once and run the same way every time: release, review, fact-check. The AI follows the sheet, not its mood.
+- Skills: Procedures written down once and followed the same way: release, review, fact-check. The AI follows the sheet, not its mood.
 - Loops: Nightly runs with a budget cap and a score. Each run is measured against a fixed rubric, and the record decides what changes next.
 
 ## Machines (made and in development)
@@ -46,7 +46,7 @@ Security: you talk to one secretary AI, and it coordinates the other models behi
 - Economy of Love v1.1 — paper, DOI 10.5281/zenodo.18277860 — https://doi.org/10.5281/zenodo.18277860
 - GAIA — a virtual earth simulation: 195 countries and 80 million people (one hundredth of the real population) built from UN and World Bank statistics. Started 2026-08-28; its in-world clock began on 2022-11-30 and is still advancing. Each day a panel of 10,000 people decides what it did.
 - IMAGE MACHINE Gen 1 — machine, now building.
-- GENERATIVE MACHINE: automatic request intake (a request goes straight to the secretary AI) — system, now building.
+- GENERATIVE MACHINE: request intake (a request reaches the secretary AI's queue without a human step) — system, running since 2026-09-07.
 
 ## Method
 
