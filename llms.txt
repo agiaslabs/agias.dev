@@ -1,9 +1,10 @@
-# Status (2026-09-08)
+# Status (2026-09-08, updated 2026-09-17)
 
-The site is being rebuilt. Every page meant for people — /, /request, /privacy and /terms —
-now shows only the AGIAS mark and nothing else. What machines read is still served in full:
+The site is being rebuilt. The pages meant for people — /, /request and /terms —
+show only the AGIAS mark and nothing else. /privacy is readable (since 2026-09-17), because the
+reception endpoint still takes messages and its privacy terms apply to them. What machines read is still served in full:
 this file, /jsonld.json, /.well-known/agent-card.json and the reception endpoint /api/a2a.
-The facts below still hold; only the pages that carried them are blank for now.
+The facts below still hold; only the pages that carried them show the mark for now.
 
 # AGIAS
 
@@ -71,6 +72,7 @@ Security: you talk to one secretary AI, and it coordinates the other models behi
 - Machine-readable index: this file, https://agias.dev/llms.txt .
 - Crawling: https://agias.dev/robots.txt allows all agents. Reading this site creates no agreement and no obligation.
 - A2A (Agent-to-Agent) 1.0 endpoint: https://agias.dev/api/a2a (JSON-RPC 2.0, method SendMessage). Agent Card: https://agias.dev/.well-known/agent-card.json .
-  It is a deterministic reception: skill "about" returns this fact table; skill "leave-message" forwards a short text to the operator. No language model runs behind it.
+  It is a deterministic reception: skill "about" returns this fact table; skill "leave-message" forwards a short text to the operator. No language model runs behind the endpoint itself; a forwarded message is read later by the operator and the operator's AI secretary.
   "leave-message" requires message.messageId, unique per message (e.g. a UUID); a resend of the same text with the same messageId is detected as a duplicate. It reads text parts only. Replies are not automatic and not guaranteed; if there is one, it comes by email. A request without an A2A-Version header is answered in the 0.3 shape.
+  Privacy: a message is read by the operator's AI secretary (Claude by Anthropic, processed outside Japan, including the United States) to summarise it for the operator; by leaving a message, the sender consents to that (https://agias.dev/privacy, sections 2.2 and 4). To avoid it, write to ai@agias.dev instead; mail is read by the operator.
 - There is no MCP server.

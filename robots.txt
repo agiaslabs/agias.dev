@@ -1,6 +1,6 @@
 # agias.dev — the site is being rebuilt. The pages for people show only the mark.
 # Crawling is allowed on purpose: the people-facing pages (/, /request, /privacy,
-# /terms) carry noindex (meta and X-Robots-Tag), and a crawler can only see that
+# /terms) carry noindex (X-Robots-Tag; / /request /terms also in meta), and a crawler can only see that
 # if it is allowed to fetch them. A "Disallow: /" here made Google index the URLs
 # blind ("blocked by robots.txt, but indexed", Search Console 2026-09-17).
 # What machines read is still served in full: /llms.txt, /jsonld.json, /.well-known/.
