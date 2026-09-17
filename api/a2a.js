@@ -1,7 +1,7 @@
 // AGIAS Reception — A2A 1.0 (JSON-RPC binding) の最小サーバー。LLM は呼ばない。
 //
 //  何をするか：SendMessage を受け、skill "about" なら事実（_facts.js）を Task の artifact で返す。
-//              skill "leave-message" なら本文を運営者へ転送する（A2A_FORWARD_URL が無ければ REJECTED で正直に断る）。
+//              skill "leave-message" なら本文を運営者へ転送する（受け皿が未設定なら REJECTED、配送に失敗したら FAILED で正直に言う）。
 //  何をしないか：タスクの保存（全部その場で完了）・ストリーミング・push 通知・拡張カード。
 //               対応しない操作は仕様どおりのエラーコードで返す（-32001 TaskNotFound など）。
 //  仕様の根拠：a2aproject/A2A の docs/specification.md と specification/a2a.proto（2026-09-04 取得）。
@@ -9,7 +9,9 @@
 //   - 0.3 系クライアント（method "message/send"、状態 "completed"、parts に kind）も受ける（互換層）。
 "use strict";
 const FACTS = require("./_facts.js");
-const VERSION = "0.1.0";
+// 版は Agent Card と同じ 1 か所で持つ。Vercel の関数バンドルに .well-known が入らない場合に備え、固定値へフォールバック（両者の一致はテストで検査）。
+const FALLBACK_VERSION = "0.2.0";
+const VERSION = (() => { try { return require("../.well-known/agent-card.json").version || FALLBACK_VERSION; } catch { return FALLBACK_VERSION; } })();
 const MAX_BODY_BYTES = 16 * 1024;     // これより大きい要求は読まない
 const MAX_TEXT_CHARS = 2000;          // leave-message の本文上限
 const RATE = { windowMs: 10 * 60 * 1000, max: 60 };
@@ -28,10 +30,13 @@ function textOf(message) {
   const parts = Array.isArray(message && message.parts) ? message.parts : [];
   return parts.map(p => (p && typeof p.text === "string") ? p.text : "").filter(Boolean).join("\n").trim();
 }
+// 伝言と読むのは "message:" と "leave-message:" だけ（全角コロンも可・大文字小文字不問）。
+// "to the operator: what is the DOI?" のような読み取りのつもりの文を伝言に振らない（9/17）。
+const PREFIX = /^\s*(message|leave-message)\s*[:：]\s*/i;
 function skillOf(params, text) {
   const m = (params && params.metadata && params.metadata.skill) || (params && params.message && params.message.metadata && params.message.metadata.skill);
   if (m === "about" || m === "leave-message") return m;
-  if (/^\s*(message|msg|leave[- ]message|to the operator|for the operator)\s*[:：]/i.test(text)) return "leave-message";
+  if (PREFIX.test(text)) return "leave-message";
   return "about";
 }
 function newId(prefix) { return prefix + "-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8); }
@@ -110,16 +115,17 @@ async function dispatch(body, ctx) {
       const contextId = message.contextId;
       if (skill === "about") return ok(id, legacy, aboutTask(legacy, contextId));
       // leave-message
-      const bodyText = text.replace(/^\s*(message|msg|leave[- ]message|to the operator|for the operator)\s*[:：]\s*/i, "");
+      const bodyText = text.replace(PREFIX, "");
       if (!bodyText) return rpcError(id, -32602, "Invalid parameters: the message text is empty");
       if (bodyText.length > MAX_TEXT_CHARS) return rpcError(id, -32602, `Invalid parameters: message longer than ${MAX_TEXT_CHARS} characters`);
       const fw = await forward(bodyText, { messageId: message.messageId, contextId });
       if (fw.ok) return ok(id, legacy, makeTask(legacy, contextId, "COMPLETED",
         "Delivered to the operator's inbox. The operator reads it; replies, if any, come by email and are not automatic.", []));
-      const why = fw.reason === "not-configured"
-        ? "Message forwarding is not configured on this deployment yet. Nothing was stored. To reach the operator, write to " + FACTS.organization.contact + "."
-        : "The message could not be delivered (" + fw.reason + "). Nothing was stored. To reach the operator, write to " + FACTS.organization.contact + ".";
-      return ok(id, legacy, makeTask(legacy, contextId, "REJECTED", why, []));
+      // 仕様 §4.1.3: 受け皿が無い（受け付けない）→ REJECTED、受け皿はあるが配送に失敗した → FAILED
+      if (fw.reason === "not-configured") return ok(id, legacy, makeTask(legacy, contextId, "REJECTED",
+        "Message forwarding is not configured on this deployment yet. Nothing was stored. To reach the operator, write to " + FACTS.organization.contact + ".", []));
+      return ok(id, legacy, makeTask(legacy, contextId, "FAILED",
+        "The message could not be delivered (" + fw.reason + "). Nothing was stored. To reach the operator, write to " + FACTS.organization.contact + ".", []));
     }
     case "GetTask":
       return rpcError(id, ERR.TaskNotFound, "Tasks are not stored on this agent: every task completes within the SendMessage response.");
@@ -184,3 +190,5 @@ module.exports.textOf = textOf;
 module.exports.rateLimited = rateLimited;
 module.exports.ERR = ERR;
 module.exports.RATE = RATE;
+module.exports.VERSION = VERSION;
+module.exports.FALLBACK_VERSION = FALLBACK_VERSION;

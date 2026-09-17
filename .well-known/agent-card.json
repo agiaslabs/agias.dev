@@ -4,7 +4,7 @@
   "supportedInterfaces": [
     { "url": "https://agias.dev/api/a2a", "protocolBinding": "JSONRPC", "protocolVersion": "1.0" }
   ],
-  "provider": { "organization": "AGIAS (TAKAYUKI MATSUSHIMA, sole proprietor in Japan)", "url": "https://agias.dev/" },
+  "provider": { "organization": "AGIAS", "url": "https://agias.dev/" },
   "version": "0.2.0",
   "documentationUrl": "https://agias.dev/llms.txt",
   "capabilities": { "streaming": false, "pushNotifications": false, "extendedAgentCard": false },
@@ -23,7 +23,7 @@
     {
       "id": "leave-message",
       "name": "Leave a message for the operator",
-      "description": "Forwards a short text (up to 2000 characters) to the operator. A few lines are enough. Start the text with \"message:\" or set metadata.skill to \"leave-message\". The task returns COMPLETED when delivered and REJECTED, with the reason, when forwarding is unavailable. Replies are not automatic.",
+      "description": "Forwards a short text (up to 2000 characters) to the operator. A few lines are enough. Start the text with \"message:\" or \"leave-message:\" (only these two prefixes; case-insensitive), or set the request's params.metadata.skill (or message.metadata.skill) to \"leave-message\". The task returns COMPLETED when delivered, FAILED when delivery fails, REJECTED when forwarding is not configured; each carries the reason. Replies are not automatic.",
       "tags": ["contact", "message", "request-work"],
       "examples": ["message: A generator that turns our product photos into a fresh looping visual every week for the shop screen.", "message: Nightly research on WebGPU compute for a small studio."],
       "inputModes": ["text/plain"],

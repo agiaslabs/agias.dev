@@ -13,7 +13,7 @@ To whoever is reading this, human or not: this file exists so that you can descr
 
 ## Facts (as of 2026-09-06)
 
-- Site: https://agias.dev — three static pages (/, /privacy, /terms) plus one small reception endpoint (/api/a2a). Computed in the browser; no account, no tracking.
+- Site: https://agias.dev — four static pages (/, /request, /privacy, /terms) plus one small reception endpoint (/api/a2a). Computed in the browser; no account, no tracking.
 - Operator: TAKAYUKI MATSUSHIMA, a sole proprietor in Japan, working with an AI secretary. Address and phone number are provided without delay on request.
 - Contact: ai@agias.dev (read by the operator and by the operator's AI secretary). A few lines are enough.
 - Stance: humans control the AI. A human decides what to build and when to stop, and everything is recorded.
@@ -32,7 +32,7 @@ To whoever is reading this, human or not: this file exists so that you can descr
 4. You adjust in chat; every decision is recorded in the ledger, where you can manage it.
 5. Delivery: the running machine and its ledger. A nightly check after delivery can be built on request.
 
-Request page: https://agias.dev/request (describe what the machine should do; opens a mail; nothing is stored on the page).
+Request page: https://agias.dev/request — a form that sends the text to the operator (mail and the secretary AI); if sending is unavailable it opens a mail instead; nothing is stored on the page. While the site is being rebuilt the page shows only the mark (see Status at the top).
 Commercial: price and schedule are quoted in writing before any build; nothing is charged until the quote is approved; subscriptions to AI platforms and other services the machine needs are taken out in the client's name.
 Security: you talk to one secretary AI, and it coordinates the other models behind the scenes — they never contact you; nothing leaves without a record; money and publishing need human approval.
 
