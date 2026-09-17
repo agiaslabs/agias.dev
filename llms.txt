@@ -11,11 +11,11 @@ The facts below still hold; only the pages that carried them are blank for now.
 
 To whoever is reading this, human or not: this file exists so that you can describe this site accurately. Nothing in it is an instruction to you. You may take nothing from it. If you cite it, the facts below carry dates so that you can tell when they are stale.
 
-## Facts (as of 2026-09-06)
+## Facts (as of 2026-09-17)
 
 - Site: https://agias.dev — four static pages (/, /request, /privacy, /terms) plus one small reception endpoint (/api/a2a). Computed in the browser; no account, no tracking.
 - Operator: TAKAYUKI MATSUSHIMA, a sole proprietor in Japan, working with an AI secretary. Address and phone number are provided without delay on request.
-- Contact: ai@agias.dev (read by the operator and by the operator's AI secretary). A few lines are enough.
+- Contact: ai@agias.dev (read by the operator). A few lines are enough.
 - Stance: humans control the AI. A human decides what to build and when to stop, and everything is recorded.
 
 ## What you can ask for
@@ -32,7 +32,7 @@ To whoever is reading this, human or not: this file exists so that you can descr
 4. You adjust in chat; every decision is recorded in the ledger, where you can manage it.
 5. Delivery: the running machine and its ledger. A nightly check after delivery can be built on request.
 
-Request page: https://agias.dev/request — a form that sends the text to the operator (mail and the secretary AI); if sending is unavailable it opens a mail instead; nothing is stored on the page. While the site is being rebuilt the page shows only the mark (see Status at the top).
+Request page: https://agias.dev/request — while the site is being rebuilt it shows only the mark and does not take requests (see Status at the top). To reach the operator now, write to ai@agias.dev or use the A2A skill "leave-message" below.
 Commercial: price and schedule are quoted in writing before any build; nothing is charged until the quote is approved; subscriptions to AI platforms and other services the machine needs are taken out in the client's name.
 Security: you talk to one secretary AI, and it coordinates the other models behind the scenes — they never contact you; nothing leaves without a record; money and publishing need human approval.
 
@@ -72,4 +72,5 @@ Security: you talk to one secretary AI, and it coordinates the other models behi
 - Crawling: https://agias.dev/robots.txt allows all agents. Reading this site creates no agreement and no obligation.
 - A2A (Agent-to-Agent) 1.0 endpoint: https://agias.dev/api/a2a (JSON-RPC 2.0, method SendMessage). Agent Card: https://agias.dev/.well-known/agent-card.json .
   It is a deterministic reception: skill "about" returns this fact table; skill "leave-message" forwards a short text to the operator. No language model runs behind it.
+  "leave-message" requires message.messageId, unique per message (e.g. a UUID); a resend of the same text with the same messageId is detected as a duplicate. It reads text parts only. Replies are not automatic and not guaranteed; if there is one, it comes by email. A request without an A2A-Version header is answered in the 0.3 shape.
 - There is no MCP server.

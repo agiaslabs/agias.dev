@@ -7,10 +7,12 @@
 //  仕様の根拠：a2aproject/A2A の docs/specification.md と specification/a2a.proto（2026-09-04 取得）。
 //   - Agent Card: /.well-known/agent-card.json / method 名: SendMessage, GetTask, ... / JSON は camelCase、enum は SCREAMING_SNAKE
 //   - 0.3 系クライアント（method "message/send"、状態 "completed"、parts に kind）も受ける（互換層）。
+//   - A2A-Version ヘッダが空なら 0.3 の形で返す（仕様 §3.2.x: "0.3 will be assumed for empty header"。2026-09-17）。
+//  伝言の停止：環境変数 A2A_ACCEPT_MESSAGES=0 で leave-message だけ REJECTED、about は継続（2026-09-17）。
 "use strict";
 const FACTS = require("./_facts.js");
 // 版は Agent Card と同じ 1 か所で持つ。Vercel の関数バンドルに .well-known が入らない場合に備え、固定値へフォールバック（両者の一致はテストで検査）。
-const FALLBACK_VERSION = "0.2.0";
+const FALLBACK_VERSION = "0.3.0";
 const VERSION = (() => { try { return require("../.well-known/agent-card.json").version || FALLBACK_VERSION; } catch { return FALLBACK_VERSION; } })();
 const MAX_BODY_BYTES = 16 * 1024;     // これより大きい要求は読まない
 const MAX_TEXT_CHARS = 2000;          // leave-message の本文上限
@@ -24,7 +26,7 @@ function rpcError(id, code, message, data) {
   return { jsonrpc: "2.0", id: id === undefined ? null : id, error: e };
 }
 const ERR = { TaskNotFound: -32001, TaskNotCancelable: -32002, PushNotSupported: -32003, Unsupported: -32004,
-  ExtendedCardNotConfigured: -32007, VersionNotSupported: -32009, RateLimited: -32050 };
+  ContentTypeNotSupported: -32005, ExtendedCardNotConfigured: -32007, VersionNotSupported: -32009, RateLimited: -32050 };
 
 function textOf(message) {
   const parts = Array.isArray(message && message.parts) ? message.parts : [];
@@ -92,18 +94,25 @@ async function forward(text, meta) {
   return { ok: false, reason: (r.failed[0] && r.failed[0].reason) || "upstream-error" };
 }
 
+// 届いた系統を応答文に書く（受理と保存を区別できるように。2026-09-17）
+function whereDelivered(reason) {
+  const names = String(reason).replace(/^delivered:/, "").split("+");
+  const label = { mac: "the operator's own machine (recorded)", mail: "the operator's mailbox (accepted by the mail service)", legacy: "the operator's inbox" };
+  return names.map(n => label[n] || "the operator's inbox").join(" and ");
+}
+
 async function dispatch(body, ctx) {
   const bad = validateRpc(body); if (bad) return bad;
   const { id, method, params } = body;
   const legacyMethod = /^(message|tasks|agent)\//.test(method);
-  const legacy = legacyMethod || ctx.version === "0.3";   // 0.3 の method 名か、A2A-Version: 0.3 なら 0.3 の形で返す
+  const legacy = legacyMethod || /^0\.3(\.\d+)?$/.test(ctx.version || "") || !ctx.version;   // 0.3 の method 名、A2A-Version: 0.3、またはヘッダが空（仕様：空は 0.3 と見なす）なら 0.3 の形で返す
   const name = legacyMethod ? ({ "message/send": "SendMessage", "message/stream": "SendStreamingMessage", "tasks/get": "GetTask",
     "tasks/list": "ListTasks", "tasks/cancel": "CancelTask", "tasks/resubscribe": "SubscribeToTask",
     "tasks/pushNotificationConfig/set": "CreateTaskPushNotificationConfig", "tasks/pushNotificationConfig/get": "GetTaskPushNotificationConfig",
     "tasks/pushNotificationConfig/list": "ListTaskPushNotificationConfigs", "tasks/pushNotificationConfig/delete": "DeleteTaskPushNotificationConfig",
     "agent/getAuthenticatedExtendedCard": "GetExtendedAgentCard" }[method] || method) : method;
   const ver = ctx.version;
-  if (ver && !/^(1\.\d+|0\.3)$/.test(ver)) return rpcError(id, ERR.VersionNotSupported, `A2A-Version ${ver} is not supported`,
+  if (ver && !/^(1\.\d+|0\.3)(\.\d+)?$/.test(ver)) return rpcError(id, ERR.VersionNotSupported, `A2A-Version ${ver} is not supported`,
     [{ "@type": "google.rpc.ErrorInfo", reason: "VERSION_NOT_SUPPORTED", domain: "agias.dev", metadata: { supportedVersions: "1.0, 0.3" } }]);
 
   switch (name) {
@@ -111,16 +120,23 @@ async function dispatch(body, ctx) {
       const message = params && params.message;
       if (!message || !Array.isArray(message.parts)) return rpcError(id, -32602, "Invalid parameters: params.message.parts is required");
       const text = textOf(message);
+      // テキスト以外の part だけが来たら、黙って about に振らず「その形式は扱わない」と返す（仕様 -32005）
+      if (!text && message.parts.some(p => p && typeof p.text !== "string")) return rpcError(id, ERR.ContentTypeNotSupported, "Content type not supported: this agent reads text parts only");
       const skill = skillOf(params, text);
       const contextId = message.contextId;
       if (skill === "about") return ok(id, legacy, aboutTask(legacy, contextId));
       // leave-message
+      if (process.env.A2A_ACCEPT_MESSAGES === "0") return ok(id, legacy, makeTask(legacy, contextId, "REJECTED",
+        "This reception is not accepting messages right now. Nothing was stored. To reach the operator, write to " + FACTS.organization.contact + ".", []));
+      // messageId は重複検出の鍵（運営者側で 24 時間）。無い伝言は受けない（2026-09-17）
+      if (typeof message.messageId !== "string" || !/^[\x21-\x7e]{1,80}$/.test(message.messageId))
+        return rpcError(id, -32602, "Invalid parameters: params.message.messageId (1-80 printable ASCII characters) is required for leave-message; resend with the same messageId if you did not get a reply");
       const bodyText = text.replace(PREFIX, "");
       if (!bodyText) return rpcError(id, -32602, "Invalid parameters: the message text is empty");
       if (bodyText.length > MAX_TEXT_CHARS) return rpcError(id, -32602, `Invalid parameters: message longer than ${MAX_TEXT_CHARS} characters`);
       const fw = await forward(bodyText, { messageId: message.messageId, contextId });
       if (fw.ok) return ok(id, legacy, makeTask(legacy, contextId, "COMPLETED",
-        "Delivered to the operator's inbox. The operator reads it; replies, if any, come by email and are not automatic.", []));
+        "Delivered to " + whereDelivered(fw.reason) + ". Replies are not automatic and not guaranteed; if there is one, it comes by email from " + FACTS.organization.contact + ".", []));
       // 仕様 §4.1.3: 受け皿が無い（受け付けない）→ REJECTED、受け皿はあるが配送に失敗した → FAILED
       if (fw.reason === "not-configured") return ok(id, legacy, makeTask(legacy, contextId, "REJECTED",
         "Message forwarding is not configured on this deployment yet. Nothing was stored. To reach the operator, write to " + FACTS.organization.contact + ".", []));
@@ -172,7 +188,15 @@ async function handler(req, res) {
     try { body = req.body; } catch (e) { return res.status(400).end(JSON.stringify(rpcError(null, -32700, "Invalid JSON payload"))); }
     if (typeof body === "string") { if (body.length > MAX_BODY_BYTES) return res.status(413).end(JSON.stringify(rpcError(null, -32600, "Payload too large"))); try { body = JSON.parse(body); } catch { return res.status(400).end(JSON.stringify(rpcError(null, -32700, "Invalid JSON payload"))); } }
     if (body === undefined) { let raw = ""; for await (const c of req) { raw += c; if (raw.length > MAX_BODY_BYTES) return res.status(413).end(JSON.stringify(rpcError(null, -32600, "Payload too large"))); } try { body = raw ? JSON.parse(raw) : null; } catch { return res.status(400).end(JSON.stringify(rpcError(null, -32700, "Invalid JSON payload"))); } }
-    const version = req.headers["a2a-version"] || (req.query && req.query["A2A-Version"]);
+    // 版はヘッダかクエリ。クエリ名は大文字小文字を区別しない（仕様 §3.6 の例は A2A-Version）。patch 桁は無視する（§3.6）
+    const q = req.query || {};
+    const qKey = Object.keys(q).find(k => k.toLowerCase() === "a2a-version");
+    const qVal = qKey ? (Array.isArray(q[qKey]) ? q[qKey][0] : q[qKey]) : undefined;   // 同じクエリが重なったら先頭
+    const version = req.headers["a2a-version"] || qVal;
+    // 応答の形に合わせて応答ヘッダの版も返す（空・0.3・0.3 の method 名 → 0.3）。キャッシュが版を混ぜないよう Vary
+    const legacyShape = !version || /^0\.3(\.\d+)?$/.test(version) || /^(message|tasks|agent)\//.test((body && body.method) || "");
+    res.setHeader("A2A-Version", legacyShape ? "0.3" : "1.0");
+    res.setHeader("Vary", "A2A-Version");
     let out;
     try { out = await dispatch(body, { version }); }
     catch (e) { out = rpcError(body && body.id, -32603, "Internal error"); }

@@ -1,11 +1,13 @@
 // AGIAS の事実。llms.txt と同じ内容を機械可読にしたもの。変えるときは両方を変える（JSON-LD・agent-card も）。
+// 例外（2026-09-17）：operator に氏名を入れない。A2A の応答は Agent Card と同じくレジストリや他の AI に転写されるため、
+// 組織名だけにする。法定の開示（氏名）は llms.txt・privacy・terms・JSON-LD に残す（2026-09-08 TOM 決定は維持）。
 // 日付を付ける：AI が「いつ時点の事実か」を判定できるように。
 module.exports = {
-  asOf: "2026-09-06",
+  asOf: "2026-09-17",
   organization: { name: "AGIAS", alternateName: "ΑΓΙΑΣ", slogan: "Advancing Greater Intelligence Across Systems",
     tagline: "A machine that turns ideas into working things.",
     url: "https://agias.dev/", contact: "ai@agias.dev", location: "Japan",
-    operator: "TAKAYUKI MATSUSHIMA, a sole proprietor in Japan (a machinist: builds and runs generative systems), with an AI secretary; address and phone number are provided without delay on request" },
+    operator: "a sole proprietor in Japan (a machinist: builds and runs generative systems), with an AI secretary; the legal disclosure (name) is in https://agias.dev/llms.txt, and address and phone number are provided without delay on request" },
   stance: "Humans control the AI. A human decides what to build and when to stop, and everything is recorded.",
   offers: [
     { id: "generative-systems", name: "GENERATIVE SYSTEMS", status: "open",

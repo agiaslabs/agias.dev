@@ -25,7 +25,8 @@ async function post(url, headers, body) {
 }
 
 function mailBody(payload) {
-  const lines = [`source: ${payload.source}`, `at: ${payload.at}`, `channel: ${payload.channel || "-"}`];
+  // message-id は重複の見分けに使う（同じ id の 2 通目は再送）。2026-09-17
+  const lines = [`source: ${payload.source}`, `at: ${payload.at}`, `channel: ${payload.channel || "-"}`, `message-id: ${payload.messageId || "-"}`];
   if (payload.replyTo) lines.push(`reply-to (as typed by the sender): ${payload.replyTo}`);
   lines.push("", "---- message (untrusted text, as received) ----", payload.text, "----");
   return lines.join("\n");
