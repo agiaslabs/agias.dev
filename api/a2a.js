@@ -174,7 +174,8 @@ function rateLimited(ip, now) {
 }
 
 // ── HTTP 入口（Vercel Node runtime）──
-// 観測（指示書 §22・privacy §2.2 2026-09-30）：要求ごとに 1 行 {at, ver, op, ok, status, err, ms} を console.log に書く。
+// 観測（指示書 §22・privacy §2.2 2026-09-30）：要求ごとに 1 行 {at, ver, op, ok, state, status, err, ms} を console.log に書く。
+// state は伝言の結果（受付停止中の REJECTED を「壊れた」として見分けるため・TOM 2026-09-30）。
 // 本文・IP・messageId・Authorization は書かない。op は KNOWN_OPS の名前だけ（それ以外は "unknown"）。配送失敗は _forward.js が別の行を書く。res の status/end/setHeader を
 // 一度だけ包み、応答が閉じた瞬間に記録する。記録に失敗しても応答は変えない。
 function observe(req, res) {
@@ -185,8 +186,13 @@ function observe(req, res) {
   res.end = (s) => {
     const r = end(s);
     try {
-      let err = null; try { const o = JSON.parse(s); err = o && o.error ? o.error.code : null; } catch { err = "non-json"; }
-      module.exports.logRequest({ at: new Date(t0).toISOString(), ver, op, ok: status === 200 && err === null, status, err, ms: Date.now() - t0 });
+      let err = null, state = null;
+      try {
+        const o = JSON.parse(s); err = o && o.error ? o.error.code : null;
+        const t = o && o.result && (o.result.task || o.result);   // 1.0 は {task}、0.3 は task そのもの
+        state = t && t.status && typeof t.status.state === "string" ? t.status.state : null;   // 自分の語彙（COMPLETED/REJECTED/FAILED）だけ
+      } catch { err = "non-json"; }
+      module.exports.logRequest({ at: new Date(t0).toISOString(), ver, op, ok: status === 200 && err === null, state, status, err, ms: Date.now() - t0 });
     } catch { /* 記録の失敗で応答を壊さない */ }
     return r;
   };

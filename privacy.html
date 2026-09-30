@@ -67,7 +67,7 @@
     </ul>
     <h3>2.2 When an AI agent or a person uses the reception endpoint (/api/a2a)</h3>
     <ul>
-      <li>The endpoint keeps no copy of the message. Every request writes one log line with the time, the protocol version, the operation, whether it succeeded, the response status and how long it took. When a delivery route fails, a second line records the time, the message ID and which route failed. Never the message text. These lines stay in the hosting provider's logs for a short time. The sender's IP address is held in the server's memory for at most 10 minutes to limit the number of requests, then discarded. The message itself is forwarded to the operator as incoming mail and to the operator's own machine, and from then on it is kept as described in section 6.</li>
+      <li>The endpoint keeps no copy of the message. Every request writes one log line with the time, the protocol version, the operation, whether it succeeded, the outcome of the message (completed, rejected or failed), the response status and how long it took. When a delivery route fails, a second line records the time, the message ID and which route failed. Never the message text. These lines stay in the hosting provider's logs for a short time. The sender's IP address is held in the server's memory for at most 10 minutes to limit the number of requests, then discarded. The message itself is forwarded to the operator as incoming mail and to the operator's own machine, and from then on it is kept as described in section 6.</li>
       <li>A message sent with the "leave-message" skill is forwarded with its text, time and message ID. If messages are not being accepted, the message is rejected and nothing is kept.</li>
       <li>A message that reaches the operator's own machine is read by the operator's AI secretary (Claude, provided by Anthropic; processed outside Japan, including the United States) so that it can be summarised for the operator. <strong>By leaving a message, you consent to this, including that transfer outside Japan</strong> (section 4). If you do not want that, write to <a href="mailto:ai@agias.dev">ai@agias.dev</a> instead: mail is read by the operator.</li>
     </ul>
@@ -147,7 +147,7 @@
     </ul>
     <h3>2.2受け取り窓口（/api/a2a）をAIエージェントや人が使うとき</h3>
     <ul>
-      <li>窓口はメッセージの写しを残しません。要求ごとに、日時・プロトコルの版・操作の種類・成否・応答の状態・所要時間を1行ログに書きます。転送経路が失敗したときは、日時・メッセージID・失敗した経路を書いた行がもう1行残ります。本文は書きません。ログはホスティング事業者の記録として短期間だけ残ります。送信元のIPアドレスは、回数制限のためにサーバーのメモリに最長10分だけ置き、その後捨てます。メッセージ本文は運営者へメールとして、また運営者の端末へ転送され、それ以降は第6項のとおり保管されます。</li>
+      <li>窓口はメッセージの写しを残しません。要求ごとに、日時・プロトコルの版・操作の種類・成否・伝言の結果（受理・拒否・失敗）・応答の状態・所要時間を1行ログに書きます。転送経路が失敗したときは、日時・メッセージID・失敗した経路を書いた行がもう1行残ります。本文は書きません。ログはホスティング事業者の記録として短期間だけ残ります。送信元のIPアドレスは、回数制限のためにサーバーのメモリに最長10分だけ置き、その後捨てます。メッセージ本文は運営者へメールとして、また運営者の端末へ転送され、それ以降は第6項のとおり保管されます。</li>
       <li>「leave-message」で送られたメッセージは、本文・日時・メッセージIDとともに転送されます。受け付けを止めている場合は受け取りを断り、何も残しません。</li>
       <li>運営者の端末に届いたメッセージは、運営者への要約のために運営者のAI秘書（Anthropic社のClaude。アメリカ合衆国を含む日本の外で処理されます）が読みます。<strong>メッセージを残すことで、この処理（日本国外での提供を含む）に同意いただいたものとします</strong>（第4項）。それを望まない場合は、代わりに <a href="mailto:ai@agias.dev">ai@agias.dev</a> へメールしてください。メールは運営者が読みます。</li>
     </ul>
