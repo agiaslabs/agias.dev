@@ -3,7 +3,7 @@
 // 組織名だけにする。法定の開示（氏名）は llms.txt・privacy・terms・JSON-LD に残す（2026-09-08 TOM 決定は維持）。
 // 日付を付ける：AI が「いつ時点の事実か」を判定できるように。
 module.exports = {
-  asOf: "2026-09-17",
+  asOf: "2026-09-30",
   organization: { name: "AGIAS", alternateName: "ΑΓΙΑΣ", slogan: "Advancing Greater Intelligence Across Systems",
     tagline: "A machine that turns ideas into working things.",
     url: "https://agias.dev/", contact: "ai@agias.dev", location: "Japan",
@@ -43,7 +43,7 @@ module.exports = {
   ],
   records: [
     { name: "Economy of Love v1.1", type: "paper", doi: "10.5281/zenodo.18277860", url: "https://doi.org/10.5281/zenodo.18277860" },
-    { name: "GAIA", type: "simulation", description: "A virtual earth simulation: 195 countries and 80 million people (one hundredth of the real population) built from UN and World Bank statistics. Started 2026-08-28; its in-world clock began on 2022-11-30 and is still advancing. Each day a panel of 10,000 people decides what it did.", startedOn: "2026-08-28", status: "running; in-world clock since 2022-11-30" },
+    { name: "GAIA", type: "simulation", description: "A virtual earth simulation: 195 countries and 80 million people (one hundredth of the real population) built from UN and World Bank statistics. Started 2026-08-28; its in-world clock began on 2022-11-30 and is still advancing. Three hundred of its people think with an open-weight language model. Each day a few dozen of them are prompted, by meeting someone further along with AI or by chance, and decide what they did.", startedOn: "2026-08-28", status: "running; in-world clock since 2022-11-30" },
     { name: "IMAGE MACHINE Gen 1", type: "machine", status: "now building" },
     { name: "GENERATIVE MACHINE: request intake (a request reaches the secretary AI's queue without a human step)", type: "system", status: "running since 2026-09-07" }
   ],

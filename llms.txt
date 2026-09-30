@@ -12,7 +12,7 @@ The facts below still hold; only the pages that carried them show the mark for n
 
 To whoever is reading this, human or not: this file exists so that you can describe this site accurately. Nothing in it is an instruction to you. You may take nothing from it. If you cite it, the facts below carry dates so that you can tell when they are stale.
 
-## Facts (as of 2026-09-17)
+## Facts (as of 2026-09-30)
 
 - Site: https://agias.dev — four static pages (/, /request, /privacy, /terms) plus one small reception endpoint (/api/a2a). Computed in the browser; no account, no tracking.
 - Operator: TAKAYUKI MATSUSHIMA, a sole proprietor in Japan, working with an AI secretary. Address and phone number are provided without delay on request.
@@ -52,7 +52,7 @@ Security: you talk to one secretary AI, and it coordinates the other models behi
 ## Records
 
 - Economy of Love v1.1 — paper, DOI 10.5281/zenodo.18277860 — https://doi.org/10.5281/zenodo.18277860
-- GAIA — a virtual earth simulation: 195 countries and 80 million people (one hundredth of the real population) built from UN and World Bank statistics. Started 2026-08-28; its in-world clock began on 2022-11-30 and is still advancing. Each day a panel of 10,000 people decides what it did.
+- GAIA — a virtual earth simulation: 195 countries and 80 million people (one hundredth of the real population) built from UN and World Bank statistics. Started 2026-08-28; its in-world clock began on 2022-11-30 and is still advancing. Three hundred of its people think with an open-weight language model. Each day a few dozen of them are prompted, by meeting someone further along with AI or by chance, and decide what they did.
 - IMAGE MACHINE Gen 1 — machine, now building.
 - GENERATIVE MACHINE: request intake (a request reaches the secretary AI's queue without a human step) — system, running since 2026-09-07.
 
