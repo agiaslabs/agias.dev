@@ -20,6 +20,16 @@ const RATE = { windowMs: 10 * 60 * 1000, max: 60 };
 const FORWARD_TIMEOUT_MS = 5000;      // (kept for docs) delivery itself lives in _forward.js   // 1 IP あたり 10 分に 60 回（インスタンス内・最善努力）
 const _hits = new Map();
 
+// 0.3 の method 名 → 1.0 の操作名。dispatch と観測（op）の両方が使う
+const LEGACY_NAMES = { "message/send": "SendMessage", "message/stream": "SendStreamingMessage", "tasks/get": "GetTask",
+  "tasks/list": "ListTasks", "tasks/cancel": "CancelTask", "tasks/resubscribe": "SubscribeToTask",
+  "tasks/pushNotificationConfig/set": "CreateTaskPushNotificationConfig", "tasks/pushNotificationConfig/get": "GetTaskPushNotificationConfig",
+  "tasks/pushNotificationConfig/list": "ListTaskPushNotificationConfigs", "tasks/pushNotificationConfig/delete": "DeleteTaskPushNotificationConfig",
+  "agent/getAuthenticatedExtendedCard": "GetExtendedAgentCard" };
+// 記録してよい操作名はこの集合だけ。それ以外の method（送信者の自由文字列）は "unknown" と書く（§22：個人情報を書かない）
+const KNOWN_OPS = new Set(Object.values(LEGACY_NAMES));
+function opOf(method) { if (typeof method !== "string") return "unknown"; const n = LEGACY_NAMES[method] || method; return KNOWN_OPS.has(n) ? n : "unknown"; }
+
 // ── 純関数（テストで直接呼ぶ）──
 function rpcError(id, code, message, data) {
   const e = { code, message }; if (data) e.data = data;
@@ -106,11 +116,7 @@ async function dispatch(body, ctx) {
   const { id, method, params } = body;
   const legacyMethod = /^(message|tasks|agent)\//.test(method);
   const legacy = legacyMethod || /^0\.3(\.\d+)?$/.test(ctx.version || "") || !ctx.version;   // 0.3 の method 名、A2A-Version: 0.3、またはヘッダが空（仕様：空は 0.3 と見なす）なら 0.3 の形で返す
-  const name = legacyMethod ? ({ "message/send": "SendMessage", "message/stream": "SendStreamingMessage", "tasks/get": "GetTask",
-    "tasks/list": "ListTasks", "tasks/cancel": "CancelTask", "tasks/resubscribe": "SubscribeToTask",
-    "tasks/pushNotificationConfig/set": "CreateTaskPushNotificationConfig", "tasks/pushNotificationConfig/get": "GetTaskPushNotificationConfig",
-    "tasks/pushNotificationConfig/list": "ListTaskPushNotificationConfigs", "tasks/pushNotificationConfig/delete": "DeleteTaskPushNotificationConfig",
-    "agent/getAuthenticatedExtendedCard": "GetExtendedAgentCard" }[method] || method) : method;
+  const name = legacyMethod ? (LEGACY_NAMES[method] || method) : method;
   const ver = ctx.version;
   if (ver && !/^(1\.\d+|0\.3)(\.\d+)?$/.test(ver)) return rpcError(id, ERR.VersionNotSupported, `A2A-Version ${ver} is not supported`,
     [{ "@type": "google.rpc.ErrorInfo", reason: "VERSION_NOT_SUPPORTED", domain: "agias.dev", metadata: { supportedVersions: "1.0, 0.3" } }]);
@@ -168,9 +174,30 @@ function rateLimited(ip, now) {
 }
 
 // ── HTTP 入口（Vercel Node runtime）──
+// 観測（指示書 §22・privacy §2.2 2026-09-30）：要求ごとに 1 行 {at, ver, op, ok, status, err, ms} を console.log に書く。
+// 本文・IP・messageId・Authorization は書かない。op は KNOWN_OPS の名前だけ（それ以外は "unknown"）。配送失敗は _forward.js が別の行を書く。res の status/end/setHeader を
+// 一度だけ包み、応答が閉じた瞬間に記録する。記録に失敗しても応答は変えない。
+function observe(req, res) {
+  const t0 = Date.now(); let ver = "1.0", status = 0, op = req.method === "GET" ? "GET" : "unknown";
+  const setHeader = res.setHeader.bind(res), setStatus = res.status.bind(res), end = res.end.bind(res);
+  res.setHeader = (k, v) => { if (k === "A2A-Version") ver = v; return setHeader(k, v); };
+  res.status = (c) => { status = c; return setStatus(c); };
+  res.end = (s) => {
+    const r = end(s);
+    try {
+      let err = null; try { const o = JSON.parse(s); err = o && o.error ? o.error.code : null; } catch { err = "non-json"; }
+      module.exports.logRequest({ at: new Date(t0).toISOString(), ver, op, ok: status === 200 && err === null, status, err, ms: Date.now() - t0 });
+    } catch { /* 記録の失敗で応答を壊さない */ }
+    return r;
+  };
+  return { op(m) { op = opOf(m); } };
+}
+function logRequest(entry) { console.log(JSON.stringify(entry)); }
+
 // Vercel のヘルパーは Content-Type: application/json で不正 JSON のとき、req.body を読んだ瞬間に throw する（statusCode 400）。
 // その経路を -32700 に落とし、dispatch の予期しない例外は -32603 にする。500 で黙らない。
 async function handler(req, res) {
+  const seen = observe(req, res);
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.setHeader("Cache-Control", "no-store");
   res.setHeader("A2A-Version", "1.0");
@@ -193,6 +220,7 @@ async function handler(req, res) {
     const qKey = Object.keys(q).find(k => k.toLowerCase() === "a2a-version");
     const qVal = qKey ? (Array.isArray(q[qKey]) ? q[qKey][0] : q[qKey]) : undefined;   // 同じクエリが重なったら先頭
     const version = req.headers["a2a-version"] || qVal;
+    seen.op(body && body.method);
     // 応答の形に合わせて応答ヘッダの版も返す（空・0.3・0.3 の method 名 → 0.3）。キャッシュが版を混ぜないよう Vary
     const legacyShape = !version || /^0\.3(\.\d+)?$/.test(version) || /^(message|tasks|agent)\//.test((body && body.method) || "");
     res.setHeader("A2A-Version", legacyShape ? "0.3" : "1.0");
@@ -216,3 +244,5 @@ module.exports.ERR = ERR;
 module.exports.RATE = RATE;
 module.exports.VERSION = VERSION;
 module.exports.FALLBACK_VERSION = FALLBACK_VERSION;
+module.exports.logRequest = logRequest;
+module.exports.opOf = opOf;
