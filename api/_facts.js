@@ -43,7 +43,7 @@ module.exports = {
   ],
   records: [
     { name: "Economy of Love v1.1", type: "paper", doi: "10.5281/zenodo.18277860", url: "https://doi.org/10.5281/zenodo.18277860" },
-    { name: "GAIA", type: "simulation", description: "A virtual earth simulation: 195 countries and 80 million people (one hundredth of the real population) built from UN and World Bank statistics. Started 2026-08-28; its in-world clock began on 2022-11-30 and is still advancing. Three hundred of its people think with an open-weight language model. Each day a few dozen of them are prompted, by meeting someone further along with AI or by chance, and decide what they did.", startedOn: "2026-08-28", status: "running; in-world clock since 2022-11-30" },
+    { name: "GAIA", type: "simulation", description: "A virtual earth simulation: 195 countries and 80 million people (one hundredth of the real population) built from World Bank, UN, ITU and GeoNames data. Started 2026-08-28; its in-world clock began on 2022-11-30 and is still advancing. Three hundred of its people think with an open-weight language model. Each day a few dozen of them are prompted, by meeting someone further along with AI or by chance, and decide what they did.", startedOn: "2026-08-28", status: "running; in-world clock since 2022-11-30" },
     { name: "IMAGE MACHINE Gen 1", type: "machine", status: "now building" },
     { name: "GENERATIVE MACHINE: request intake (a request reaches the secretary AI's queue without a human step)", type: "system", status: "running since 2026-09-07" }
   ],

@@ -52,7 +52,7 @@ Security: you talk to one secretary AI, and it coordinates the other models behi
 ## Records
 
 - Economy of Love v1.1 — paper, DOI 10.5281/zenodo.18277860 — https://doi.org/10.5281/zenodo.18277860
-- GAIA — a virtual earth simulation: 195 countries and 80 million people (one hundredth of the real population) built from UN and World Bank statistics. Started 2026-08-28; its in-world clock began on 2022-11-30 and is still advancing. Three hundred of its people think with an open-weight language model. Each day a few dozen of them are prompted, by meeting someone further along with AI or by chance, and decide what they did.
+- GAIA — a virtual earth simulation: 195 countries and 80 million people (one hundredth of the real population) built from World Bank, UN, ITU and GeoNames data. Started 2026-08-28; its in-world clock began on 2022-11-30 and is still advancing. Three hundred of its people think with an open-weight language model. Each day a few dozen of them are prompted, by meeting someone further along with AI or by chance, and decide what they did.
 - IMAGE MACHINE Gen 1 — machine, now building.
 - GENERATIVE MACHINE: request intake (a request reaches the secretary AI's queue without a human step) — system, running since 2026-09-07.
 
