@@ -3,7 +3,7 @@
 // 組織名だけにする。法定の開示（氏名）は llms.txt・privacy・terms・JSON-LD に残す（2026-09-08 TOM 決定は維持）。
 // 日付を付ける：AI が「いつ時点の事実か」を判定できるように。
 module.exports = {
-  asOf: "2026-09-30",
+  asOf: "2026-10-07",
   organization: { name: "AGIAS", alternateName: "ΑΓΙΑΣ", slogan: "Advancing Greater Intelligence Across Systems",
     tagline: "A machine that turns ideas into working things.",
     url: "https://agias.dev/", contact: "ai@agias.dev", location: "Japan",
@@ -39,7 +39,13 @@ module.exports = {
     { name: "IMAGE MACHINE", status: "now building (Gen 1)",
       description: "Will learn from the prompts used so far and keep generating images on its own through an image-generation platform." },
     { name: "Evolver Engine", status: "running nightly",
-      description: "Every night it scans GitHub, papers, and primary sources, proposes what to adopt, and records the reason. A line in the ledger before a line of code. The AI learns from each night and keeps improving itself." }
+      description: "Every night it scans GitHub, papers, and primary sources, proposes what to adopt, and records the reason. A line in the ledger before a line of code. The AI learns from each night and keeps improving itself." },
+    { name: "Improvement loops", status: "running in several projects",
+      description: "Several projects here run improvement loops in rounds: each round proposes one change, the change is checked by tests or a fixed scorer, or chosen by a person, and the result is written to a ledger. Each loop is graded from 0 to 5 by evidence on disk, not by what it claims. A reviewer model's approval never adopts anything on its own; adoption needs fixed machine checks or a human's choice." },
+    { name: "Genome breeding", status: "scene loop paused; material breeding running",
+      description: "On a research branch of GENERATIVE MACHINE, visual scenes are written as genomes: new scenes are made by mutation and crossover, rendered without a screen and compared frame by frame, and a person's ratings choose the parents. Separately, AI writes candidate surface shaders (fire, magma, marble, liquid chrome, smoke); each is checked automatically for errors, frame rate and flashing, and a person adopts it or not. Materials are also bred by choice: six candidates are shown, and the ones chosen become the parents of the next round." },
+    { name: "Morning code improvement", status: "running for MANDALA MACHINE",
+      description: "On mornings when the nightly scan lists candidates for MANDALA MACHINE, AI makes one small fix or improvement, tests it in an isolated sandbox, has it reviewed, and opens a pull request. The loop never merges on its own." }
   ],
   records: [
     { name: "Economy of Love v1.1", type: "paper", doi: "10.5281/zenodo.18277860", url: "https://doi.org/10.5281/zenodo.18277860" },
@@ -55,7 +61,7 @@ module.exports = {
   method: [
     { name: "Gates", text: "Hooks stop the AI before it acts: a commit with a secret, a delete without a look, a claim without a fact. The gate wins, not the model." },
     { name: "Skills", text: "Procedures written down once and followed the same way: release, review, fact-check. The AI follows the sheet, not its mood." },
-    { name: "Loops", text: "Nightly runs with a budget cap and a score. Each run is measured against a fixed rubric, and the record decides what changes next." } ],
+    { name: "Loops", text: "Nightly runs with a budget cap and a score. Each run is measured against a fixed rubric, and the record decides what changes next. Recent experiments have their adoption criteria written down before they start, so the result cannot be reinterpreted afterwards." } ],
   commercial: ["price and schedule are quoted in writing before any build", "nothing is charged until the quote is approved", "subscriptions to AI platforms and other services the machine needs are taken out in the client's name", "AI agents can read this site agent to agent; requests are taken by mail"],
   security: ["you talk to one secretary AI; it coordinates the other models behind the scenes and they never contact you", "nothing leaves without a record", "money and publishing need human approval"],
   privacy: ["mail and material are kept in the operator's own OBSIDIAN vault and used only for the request", "they may be read by the AIs listed under HOW to draft the spec and build; nothing is published without approval", "material is kept up to one year after delivery, or deleted earlier on request; the ledger is handed over with the machine", "the site sets no cookies and runs no analytics"],

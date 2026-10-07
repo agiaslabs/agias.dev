@@ -9,6 +9,7 @@
 <title>AGIAS</title>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="alternate" type="text/plain" href="/llms.txt" title="Machine-readable summary">
+<link rel="alternate" type="application/json" href="/.well-known/agent-card.json" title="A2A agent card">
 <link rel="preload" href="/assets/fonts/jetbrains-mono-greek.woff2" as="font" type="font/woff2" crossorigin>
 <style>
   /* ロゴの字は JetBrains Mono のギリシャ部分だけを切り出したもの（OFL・/assets/fonts/JetBrainsMono-OFL.txt） */
@@ -67,7 +68,10 @@
     "audio-reactive visuals",
     "AI agents",
     "human-AI collaboration",
-    "ledger-first research"
+    "ledger-first research",
+    "recursive self-improvement",
+    "genome breeding of visuals",
+    "pre-registered evaluation"
    ]
   },
   {
@@ -79,7 +83,7 @@
    "publisher": {
     "@id": "https://agias.dev/#agias"
    },
-   "dateModified": "2026-09-06"
+   "dateModified": "2026-10-07"
   },
   {
    "@type": "Service",
@@ -252,6 +256,51 @@
     "@type": "PropertyValue",
     "name": "status",
     "value": "running"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "@id": "https://agias.dev/#improvement-loops",
+   "name": "Improvement loops",
+   "applicationCategory": "DeveloperApplication",
+   "description": "Several projects here run improvement loops in rounds: each round proposes one change, the change is checked by tests or a fixed scorer, or chosen by a person, and the result is written to a ledger. Each loop is graded from 0 to 5 by evidence on disk, not by what it claims. A reviewer model's approval never adopts anything on its own; adoption needs fixed machine checks or a human's choice.",
+   "creator": {
+    "@id": "https://agias.dev/#agias"
+   },
+   "additionalProperty": {
+    "@type": "PropertyValue",
+    "name": "status",
+    "value": "running in several projects"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "@id": "https://agias.dev/#genome-breeding",
+   "name": "Genome breeding",
+   "applicationCategory": "DeveloperApplication",
+   "description": "On a research branch of GENERATIVE MACHINE, visual scenes are written as genomes: new scenes are made by mutation and crossover, rendered without a screen and compared frame by frame, and a person's ratings choose the parents. Separately, AI writes candidate surface shaders (fire, magma, marble, liquid chrome, smoke); each is checked automatically for errors, frame rate and flashing, and a person adopts it or not. Materials are also bred by choice: six candidates are shown, and the ones chosen become the parents of the next round.",
+   "creator": {
+    "@id": "https://agias.dev/#agias"
+   },
+   "additionalProperty": {
+    "@type": "PropertyValue",
+    "name": "status",
+    "value": "scene loop paused; material breeding running"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "@id": "https://agias.dev/#morning-code-improvement",
+   "name": "Morning code improvement",
+   "applicationCategory": "DeveloperApplication",
+   "description": "On mornings when the nightly scan lists candidates for MANDALA MACHINE, AI makes one small fix or improvement, tests it in an isolated sandbox, has it reviewed, and opens a pull request. The loop never merges on its own.",
+   "creator": {
+    "@id": "https://agias.dev/#agias"
+   },
+   "additionalProperty": {
+    "@type": "PropertyValue",
+    "name": "status",
+    "value": "running for MANDALA MACHINE"
    }
   }
  ]
