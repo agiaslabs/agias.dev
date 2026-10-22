@@ -67,7 +67,7 @@ Security: you talk to one secretary AI, and it coordinates the other models behi
 
 ## Privacy
 
-- Mail and material are kept in the operator's own OBSIDIAN vault and used only for the request. They may be read by the AIs listed under How a request runs (Claude, Gemini, GPT, local models) to draft the spec and build. Nothing is published without approval. Material is kept up to one year after delivery, or deleted earlier on request; the ledger is handed over with the machine. The site sets no cookies and runs no analytics.
+- Mail and material are kept in the operator's own OBSIDIAN vault and used only for the request. They may be read by the AIs listed under How a request runs (Claude, Gemini, GPT, local models) to draft the spec and build. Nothing is published without approval. Material is kept up to one year after delivery, or deleted earlier on request; the ledger is handed over with the machine. The site sets no cookies and runs no tracking scripts. It is delivered through Cloudflare and hosted on Vercel; both keep standard request logs (including IP addresses), and from them only totals are read — requests, pages, countries.
 
 ## For agents
 
