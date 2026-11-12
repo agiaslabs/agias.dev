@@ -1,0 +1,4 @@
+Contact: mailto:ai@agias.dev
+Preferred-Languages: en, ja
+Canonical: https://agias.dev/.well-known/security.txt
+Expires: 2027-09-04T00:00:00.000Z
